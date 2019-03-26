@@ -19,9 +19,6 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FragmentManager fragmentManager = getSupportFragmentManager();
-    private FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragmentTransaction.replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_announcements);
     }
 
@@ -90,17 +87,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_announcements) {
-            fragmentTransaction.replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-            fragmentTransaction.replace(R.id.fragmentContainer, new GalleryFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GalleryFragment()).commit();
         } else if (id == R.id.nav_videos) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
         } else if (id == R.id.nav_calendar) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new CalendarFragment()).commit();
         } else if (id == R.id.nav_info) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new InformationFragment()).commit();
         } else if (id == R.id.nav_settings) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new SettingsFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
