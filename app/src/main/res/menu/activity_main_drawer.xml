@@ -18,9 +18,9 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Videos" />
         <item
-            android:id="@+id/nav_calander"
-            android:icon="@drawable/ic_calender"
-            android:title="Calander" />
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_calendar"
+            android:title="Calendar" />
     </group>
     <group
         android:id="@+id/App"
