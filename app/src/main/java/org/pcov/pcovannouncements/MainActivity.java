@@ -3,6 +3,8 @@ package org.pcov.pcovannouncements;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,6 +18,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
+        fragmentTransaction.replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_announcements);
     }
 
@@ -85,12 +90,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_announcements) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
+            fragmentTransaction.replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GalleryFragment()).commit();
+            fragmentTransaction.replace(R.id.fragmentContainer, new GalleryFragment()).commit();
         } else if (id == R.id.nav_videos) {
 
-        } else if (id == R.id.nav_calander) {
+        } else if (id == R.id.nav_calendar) {
 
         } else if (id == R.id.nav_info) {
 
