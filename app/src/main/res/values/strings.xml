@@ -7,6 +7,14 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Information Drawer Strings -->
+    <string name="staff">Staff</string>
+    <string name="about_us">About Us</string>
+    <string name="worship_services">Worship Services</string>
+    <string name="for_newcomers">For Newcomers</string>
+    <string name="church_history">Church History</string>
+    <string name="visit_us">Visit Us</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
