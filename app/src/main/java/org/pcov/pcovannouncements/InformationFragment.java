@@ -41,7 +41,7 @@ public class InformationFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.infoRecyclerView);
         mRecyclerView.setHasFixedSize(true);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(informationList, getContext());
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(informationList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(adapter);
 

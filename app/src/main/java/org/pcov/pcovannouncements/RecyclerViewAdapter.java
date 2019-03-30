@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private Context mContext;
     private ArrayList<InformationCard> mInfoCardList;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -27,15 +26,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(ArrayList<InformationCard> infoCardList, Context context) {
+    public RecyclerViewAdapter(ArrayList<InformationCard> infoCardList) {
         mInfoCardList = infoCardList;
-        mContext = context;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.card_information, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_information, viewGroup, false);
         MyViewHolder viewHolder = new MyViewHolder(v);
         return viewHolder;
     }
