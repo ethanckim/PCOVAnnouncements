@@ -3,8 +3,10 @@ package org.pcov.pcovannouncements;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -87,20 +89,29 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment nextFrag;
 
         if (id == R.id.nav_announcements) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
+            nextFrag = new AnnouncementFragment();
         } else if (id == R.id.nav_gallery) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GalleryFragment()).commit();
+            nextFrag = new GalleryFragment();
         } else if (id == R.id.nav_videos) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
+            nextFrag = new VideosFragment();
         } else if (id == R.id.nav_calendar) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new CalendarFragment()).commit();
+            nextFrag = new CalendarFragment();
         } else if (id == R.id.nav_info) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new InformationFragment()).commit();
+            nextFrag = new InformationFragment();
         } else if (id == R.id.nav_settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new SettingsFragment()).commit();
+            nextFrag = new SettingsFragment();
+        } else {
+            nextFrag = new SettingsFragment();
+            Log.w("WARNING", "WARNING: Unexpected Fragment Item has been chosen from the navigation Drawer."
+                    + "\n" + "Currently set it to the settings Fragment to avoid null pointer.");
         }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, nextFrag, nextFrag.getTag())
+                .commit();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
