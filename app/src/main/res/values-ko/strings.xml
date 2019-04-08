@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">빌라델비아 교회</string>
+
+    <!-- Navigation Drawer Strings -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">밴쿠버 빌라델비아 교회</string>
+    <string name="nav_header_subtitle">2019년 표어: 예배와 선교에 힘쓰는 교회</string>
+    <string name="nav_header_contentDescription">빌라델비아 교회 로고</string>
+
+    <!-- Information Fragment Strings -->
+    <string name="about_us">교회비전과 목회자 팀</string>
+    <string name="for_newcomers">처음 오신분을 위하여</string>
+    <string name="worship_services">예배 및 성경공부 안내</string>
+    <string name="church_history">연혁</string>
+    <string name="visit_us">연락과 찾아오시는 길</string>
+
+</resources>
