@@ -7,6 +7,10 @@
     <string name="nav_header_title">The Philadelphia Church Of Vancouver</string>
     <string name="nav_header_subtitle">Vision of 2019: A Church that glorifies the Lord by spreading the Gospel and worshiping him. </string>
     <string name="nav_header_contentDescription">Philadelphia Church of Vancouver Logo</string>
+    <string name="nav_select_sermons">Sermon Videos</string>
+    <string name="nav_select_announcements">Philly News</string>
+    <string name="nav_select_gallery">Gallery</string>
+    <string name="nav_select_information">About Philly Church</string>
 
     <!-- Information Fragment Strings -->
     <string name="about_us">About Us</string>

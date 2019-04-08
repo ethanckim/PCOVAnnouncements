@@ -7,6 +7,10 @@
     <string name="nav_header_title">밴쿠버 빌라델비아 교회</string>
     <string name="nav_header_subtitle">2019년 표어: 예배와 선교에 힘쓰는 교회</string>
     <string name="nav_header_contentDescription">빌라델비아 교회 로고</string>
+    <string name="nav_select_sermons">예배 영상</string>
+    <string name="nav_select_announcements">빌라델비아 뉴스</string>
+    <string name="nav_select_gallery">교회 사진</string>
+    <string name="nav_select_information">우리에 대하여</string>
 
     <!-- Information Fragment Strings -->
     <string name="about_us">교회비전과 목회자 팀</string>

@@ -5,30 +5,23 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_announcements"
-            android:icon="@drawable/ic_announcement"
-            android:title="Announcements" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+
         <item
             android:id="@+id/nav_videos"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Videos" />
+            android:title="@string/nav_select_sermons" />
         <item
-            android:id="@+id/nav_calendar"
-            android:icon="@drawable/ic_calendar"
-            android:title="Calendar" />
+            android:id="@+id/nav_announcements"
+            android:icon="@drawable/ic_announcement"
+            android:title="@string/nav_select_announcements" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/nav_select_gallery"  />
         <item
             android:id="@+id/nav_info"
             android:icon="@android:drawable/ic_dialog_info"
-            android:title="Information" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
+            android:title="@string/nav_select_information" />
     </group>
 
 </menu>

@@ -74,12 +74,8 @@ public class MainActivity extends AppCompatActivity
             nextFrag = new GalleryFragment();
         } else if (id == R.id.nav_videos) {
             nextFrag = new VideosFragment();
-        } else if (id == R.id.nav_calendar) {
-            nextFrag = new CalendarFragment();
         } else if (id == R.id.nav_info) {
             nextFrag = new InformationFragment();
-        } else if (id == R.id.nav_settings) {
-            nextFrag = new SettingsFragment();
         } else {
             nextFrag = new SettingsFragment();
             Log.w("WARNING", "WARNING: Unexpected Fragment Item has been chosen from the navigation Drawer."
