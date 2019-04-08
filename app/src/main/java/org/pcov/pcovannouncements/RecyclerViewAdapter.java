@@ -31,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
+            mImageView = itemView.findViewById(R.id.infocardImageView);
             mTextView = itemView.findViewById(R.id.textView);
 
             itemView.setOnClickListener(new View.OnClickListener() {

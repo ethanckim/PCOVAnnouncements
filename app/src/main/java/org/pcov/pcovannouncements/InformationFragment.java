@@ -27,11 +27,11 @@ public class InformationFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         minformationList = new ArrayList<>();
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "About Us"));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "For Newcomers"));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Worship Services"));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Church History"));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Visit Us!"));
+        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.about_us)));
+        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.for_newcomers)));
+        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.worship_services)));
+        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.church_history)));
+        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.visit_us)));
     }
 
     @Nullable

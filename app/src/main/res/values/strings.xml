@@ -1,20 +1,18 @@
 <resources>
     <string name="app_name">PCOV Announcements</string>
+
+    <!-- Navigation Drawer Strings -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="nav_header_title">The Philadelphia Church Of Vancouver</string>
+    <string name="nav_header_subtitle">Vision of 2019: A Church that glorifies the Lord by spreading the Gospel and worshiping him. </string>
+    <string name="nav_header_contentDescription">Philadelphia Church of Vancouver Logo</string>
 
-    <!-- Information Drawer Strings -->
-    <string name="staff">Staff</string>
+    <!-- Information Fragment Strings -->
     <string name="about_us">About Us</string>
-    <string name="worship_services">Worship Services</string>
     <string name="for_newcomers">For Newcomers</string>
+    <string name="worship_services">Worship Services</string>
     <string name="church_history">Church History</string>
     <string name="visit_us">Visit Us</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
