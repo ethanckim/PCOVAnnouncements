@@ -30,7 +30,6 @@ public class InformationFragment extends Fragment {
         minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "About Us"));
         minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "For Newcomers"));
         minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Worship Services"));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Staff"));
         minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Church History"));
         minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, "Visit Us!"));
     }
@@ -51,13 +50,12 @@ public class InformationFragment extends Fragment {
         adapter.setOnClickListener(new RecyclerViewAdapter.OnCardClickListener() {
             @Override
             public void onCardClick(int position) {
-                //Navigate to the new fragment
+                //Navigate to the new activity, based off the card (Use position the distinguish cards)
+                Intent i;
+                i = new Intent(getActivity(), AboutUsWebviewActivity.class);
+                i.putExtra("position", position);
+                startActivity(i);
 
-                InformationCardChild nextFrag = new InformationCardChild();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, nextFrag, nextFrag.getTag())
-                        .commit();
             }
         });
 
