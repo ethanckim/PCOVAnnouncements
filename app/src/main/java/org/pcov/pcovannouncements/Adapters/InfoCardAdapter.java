@@ -1,4 +1,4 @@
-package org.pcov.pcovannouncements;
+package org.pcov.pcovannouncements.Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.pcov.pcovannouncements.InformationCard;
+import org.pcov.pcovannouncements.R;
+
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyViewHolder> {
 
     private ArrayList<InformationCard> mInfoCardList;
     private OnCardClickListener mListener;
@@ -48,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(ArrayList<InformationCard> infoCardList) {
+    public InfoCardAdapter(ArrayList<InformationCard> infoCardList) {
         mInfoCardList = infoCardList;
     }
 

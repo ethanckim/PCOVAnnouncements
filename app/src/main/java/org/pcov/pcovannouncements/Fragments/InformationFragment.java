@@ -1,17 +1,20 @@
-package org.pcov.pcovannouncements;
+package org.pcov.pcovannouncements.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.pcov.pcovannouncements.AboutUsWebviewActivity;
+import org.pcov.pcovannouncements.InfoCardAdapter;
+import org.pcov.pcovannouncements.InformationCard;
+import org.pcov.pcovannouncements.R;
 
 import java.util.ArrayList;
 
@@ -43,11 +46,11 @@ public class InformationFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.infoRecyclerView);
         mRecyclerView.setHasFixedSize(true);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(minformationList);
+        InfoCardAdapter adapter = new InfoCardAdapter(minformationList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new RecyclerViewAdapter.OnCardClickListener() {
+        adapter.setOnClickListener(new InfoCardAdapter.OnCardClickListener() {
             @Override
             public void onCardClick(int position) {
                 //Navigate to the new activity, based off the card (Use position the distinguish cards)
