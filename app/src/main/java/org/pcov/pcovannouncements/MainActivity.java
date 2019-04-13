@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new AnnouncementFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_announcements);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
+        navigationView.setCheckedItem(R.id.nav_videos);
     }
 
     public void setActionBarTitle(String title) {
