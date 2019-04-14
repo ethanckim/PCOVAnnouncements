@@ -12,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.pcov.pcovannouncements.AboutUsWebviewActivity;
-import org.pcov.pcovannouncements.InfoCardAdapter;
+import org.pcov.pcovannouncements.Adapters.SermonCardAdapter;
 import org.pcov.pcovannouncements.InformationCard;
 import org.pcov.pcovannouncements.R;
+import org.pcov.pcovannouncements.SermonCard;
 import org.pcov.pcovannouncements.VideoViewer;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class VideosFragment extends Fragment {
 
     private View v;
     private RecyclerView mRecyclerView;
-    private ArrayList<InformationCard> mSermonVideosList;
+    private ArrayList<SermonCard> mSermonVideosList;
 
 
     @Override
@@ -33,11 +33,7 @@ public class VideosFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mSermonVideosList = new ArrayList<>();
-        mSermonVideosList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.about_us)));
-        mSermonVideosList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.for_newcomers)));
-        mSermonVideosList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.worship_services)));
-        mSermonVideosList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.church_history)));
-        mSermonVideosList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.visit_us)));
+        mSermonVideosList.add(new SermonCard("ji86pAF6nYA", "수가성 여인의 참 예배와 구원", "김성훈 목사 Stanley Kim 2019 04 07"));
     }
 
     @Nullable
@@ -49,11 +45,11 @@ public class VideosFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.videosRecyclerView);
         mRecyclerView.setHasFixedSize(true);
 
-        InfoCardAdapter adapter = new InfoCardAdapter(mSermonVideosList);
+        SermonCardAdapter adapter = new SermonCardAdapter(mSermonVideosList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new InfoCardAdapter.OnCardClickListener() {
+        adapter.setOnClickListener(new SermonCardAdapter.OnCardClickListener() {
             @Override
             public void onCardClick(int position) {
                 //Navigate to the new activity, based off the card (Use position the distinguish cards)
