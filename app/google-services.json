@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "169269112438",
+    "firebase_url": "https://pcov-2019.firebaseio.com",
+    "project_id": "pcov-2019",
+    "storage_bucket": "pcov-2019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169269112438:android:a03dc3ed0b42980a",
+        "android_client_info": {
+          "package_name": "org.pcov.pcovannouncements"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169269112438-qg3731qp2d4vvd0aep3tfjkkjqsep55u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.pcov.pcovannouncements",
+            "certificate_hash": "04d2a8533183002391e012ec0517e3940866d2d5"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDL91GKsGc4guoK5K6qr9_UtTTwAgOGyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169269112438-h646jhi9q8goqeoseecjjk4poomjdmvg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
