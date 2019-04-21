@@ -1,6 +1,5 @@
 package org.pcov.pcovannouncements.Fragments;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.pcov.pcovannouncements.Adapters.SermonCardAdapter;
-import org.pcov.pcovannouncements.InformationCard;
 import org.pcov.pcovannouncements.R;
 import org.pcov.pcovannouncements.SermonCard;
 import org.pcov.pcovannouncements.VideoViewer;
@@ -26,7 +24,6 @@ public class VideosFragment extends Fragment {
     private View v;
     private RecyclerView mRecyclerView;
     private ArrayList<SermonCard> mSermonVideosList;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
