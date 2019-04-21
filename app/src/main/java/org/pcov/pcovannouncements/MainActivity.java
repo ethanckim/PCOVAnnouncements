@@ -1,26 +1,31 @@
 package org.pcov.pcovannouncements;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.youtube.model.Channel;
-import com.google.api.services.youtube.model.ChannelListResponse;
+import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.PlaylistItem;
+import com.google.api.services.youtube.model.PlaylistItemListResponse;
 
 import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
 import org.pcov.pcovannouncements.Fragments.GalleryFragment;
@@ -34,6 +39,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String DEVELOPER_KEY = "AIzaSyCNERNNOxAggAs5ewHOqtt0g6LzZgi53gI";
+    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        getResultsFromApi();
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity
             nextFrag = new GalleryFragment();
         } else if (id == R.id.nav_videos) {
             nextFrag = new VideosFragment();
+            getResultsFromApi();
         } else if (id == R.id.nav_info) {
             nextFrag = new InformationFragment();
         } else {
@@ -102,20 +112,91 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
+     * Attempt to call the API, after verifying that all the preconditions are
+     * satisfied. The preconditions are: Google Play Services installed, an
+     * account was selected and the device currently has online access. If any
+     * of the preconditions are not satisfied, the app will prompt the user as
+     * appropriate.
+     */
+    private void getResultsFromApi() {
+        if (! isGooglePlayServicesAvailable()) {
+            acquireGooglePlayServices();
+        } else if (! isDeviceOnline()) {
+            Toast noInternetToast = Toast.makeText(getApplicationContext(), "No network connection available", Toast.LENGTH_SHORT);
+            noInternetToast.show();
+        } else {
+            new MakeRequestTask().execute();
+        }
+    }
+
+
+    /**
+     * Checks whether the device currently has a network connection.
+     * @return true if the device has a network connection, false otherwise.
+     */
+    private boolean isDeviceOnline() {
+        ConnectivityManager connMgr =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    /**
+     * Check that Google Play services APK is installed and up to date.
+     * @return true if Google Play Services is available and up to
+     *     date on this device; false otherwise.
+     */
+    private boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability apiAvailability =
+                GoogleApiAvailability.getInstance();
+        final int connectionStatusCode =
+                apiAvailability.isGooglePlayServicesAvailable(this);
+        return connectionStatusCode == ConnectionResult.SUCCESS;
+    }
+
+    /**
+     * Attempt to resolve a missing, out-of-date, invalid or disabled Google
+     * Play Services installation via a user dialog, if possible.
+     */
+    private void acquireGooglePlayServices() {
+        GoogleApiAvailability apiAvailability =
+                GoogleApiAvailability.getInstance();
+        final int connectionStatusCode =
+                apiAvailability.isGooglePlayServicesAvailable(this);
+        if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
+            showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
+        }
+    }
+
+    /**
+     * Display an error dialog showing that Google Play Services is missing
+     * or out of date.
+     * @param connectionStatusCode code describing the presence (or lack of)
+     *     Google Play Services on this device.
+     */
+    void showGooglePlayServicesAvailabilityErrorDialog(
+            final int connectionStatusCode) {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        Dialog dialog = apiAvailability.getErrorDialog(
+                MainActivity.this,
+                connectionStatusCode,
+                REQUEST_GOOGLE_PLAY_SERVICES);
+        dialog.show();
+    }
+
+
+    /**
      * An asynchronous task that handles the YouTube Data API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
     private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-        private com.google.api.services.youtube.YouTube mService = null;
+        private YouTube mService = null;
         private Exception mLastError = null;
 
         MakeRequestTask() {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            mService = new com.google.api.services.youtube.YouTube.Builder(transport, jsonFactory, new HttpRequestInitializer() {
-                public void initialize(HttpRequest request) throws IOException {
-                }
-            })
+            mService = new YouTube.Builder(transport, jsonFactory, null)
                     .setApplicationName(getString(R.string.app_name))
                     .build();
         }
@@ -136,24 +217,35 @@ public class MainActivity extends AppCompatActivity
         }
 
         /**
-         * Fetch information about the "Phil Church" YouTube channel.
+         * Fetch information about the "Phil Church" Uploads Playlist Item.
+         * The aim is to get the videoId, which would be used to view the videos in the Youtube Viewer.
          * @return List of Strings containing information about the channel.
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
             // Get a list of up to 10 files.
-            List<String> channelInfo = new ArrayList<String>();
-            ChannelListResponse result = mService.channels().list("snippet,contentDetails,statistics")
-                    .setId("UCOnGdCsRfhaWsE3oFrKapiw")
+            List<String> playlistItemInfo = new ArrayList<String>();
+
+            YouTube.PlaylistItems.List request = mService.playlistItems()
+                    .list("contentDetails");
+
+            PlaylistItemListResponse response = request.setKey(DEVELOPER_KEY)
+                    .setMaxResults(50L)
+                    .setPlaylistId("UUOnGdCsRfhaWsE3oFrKapiw")
                     .execute();
-            List<Channel> channels = result.getItems();
-            if (channels != null) {
-                Channel channel = channels.get(0);
-                channelInfo.add("This channel's ID is " + channel.getId() + ". " +
-                        "Its title is '" + channel.getSnippet().getTitle() + ", " +
-                        "and it has " + channel.getStatistics().getViewCount() + " views.");
+
+
+            List<PlaylistItem> playlistItems = response.getItems();
+            if (playlistItems != null) {
+                for (int i = 0; i < playlistItems.size(); i++) {
+                    PlaylistItem playlistItem = playlistItems.get(i);
+                    playlistItemInfo.add(playlistItem.getContentDetails().getVideoId());
+                }
+                //log
+                Log.d("GetFullAPI", playlistItems.toString());
+                Log.d("GetOnlyNecessaryInfo", playlistItemInfo.toString());
             }
-            return channelInfo;
+            return playlistItemInfo;
         }
 
 
@@ -164,10 +256,10 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(List<String> output) {
             if (output == null || output.size() == 0) {
-                mOutputText.setText("No results returned.");
+                //no results returned - Error!
+                Log.w("WARNING", "Warning - No results returned from Youtube Data API");
             } else {
-                output.add(0, "Data retrieved using the YouTube Data API:");
-                mOutputText.setText(TextUtils.join("\n", output));
+                //Results returned
             }
         }
     }
