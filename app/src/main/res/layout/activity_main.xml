@@ -19,8 +19,33 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer">
 
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="500dp"
+            android:background="@drawable/pcov_churchphoto"
+            android:contentDescription="@string/churchphoto"
+            android:paddingStart="24dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="24dp"
+            android:visibility="visible" />
+
+    </android.support.design.widget.NavigationView>
+
+
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="64dp"
+        android:text="@string/nav_header_subtitle"
+        android:textSize="16sp" />-->
 </android.support.v4.widget.DrawerLayout>

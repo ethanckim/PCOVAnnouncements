@@ -18,6 +18,10 @@
     <string name="worship_services">Worship Services</string>
     <string name="church_history">Church History</string>
     <string name="visit_us">Visit Us</string>
+
+    <string name="churchphoto">churchPhoto</string>
+
     <string name="title_activity_video_viewer">VideoViewer</string>
+
 
 </resources>
