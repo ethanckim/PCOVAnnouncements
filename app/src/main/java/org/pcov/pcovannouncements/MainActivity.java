@@ -2,6 +2,7 @@ package org.pcov.pcovannouncements;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -15,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -27,6 +30,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 
+import org.pcov.pcovannouncements.Adapters.YouTubeConfig;
 import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
 import org.pcov.pcovannouncements.Fragments.GalleryFragment;
 import org.pcov.pcovannouncements.Fragments.InformationFragment;
@@ -40,7 +44,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String DEVELOPER_KEY = "AIzaSyCNERNNOxAggAs5ewHOqtt0g6LzZgi53gI";
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
 
     @Override
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_videos);
+
+        orientationChangeSetUp();
     }
 
     public void setActionBarTitle(String title) {
@@ -109,6 +114,24 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Makes necessary changes Orientation is changed (Landscape/Portrait)
+     */
+    public void orientationChangeSetUp() {
+
+        int newOrientation = this.getResources().getConfiguration().orientation;
+
+        ImageView footerPhoto = findViewById(R.id.nav_footer_photo);
+
+        if (newOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            footerPhoto.setVisibility(View.INVISIBLE);
+            Log.d("FooterVisibility", "Footer Image is invisible so the user can click buttons");
+        } else {
+            footerPhoto.setVisibility(View.VISIBLE);
+            Log.d("FooterVisibility", "Footer Image can be seen.");
+        }
     }
 
     /**
@@ -229,7 +252,7 @@ public class MainActivity extends AppCompatActivity
             YouTube.PlaylistItems.List request = mService.playlistItems()
                     .list("contentDetails");
 
-            PlaylistItemListResponse response = request.setKey(DEVELOPER_KEY)
+            PlaylistItemListResponse response = request.setKey(YouTubeConfig.getApiKey())
                     .setMaxResults(50L)
                     .setPlaylistId("UUOnGdCsRfhaWsE3oFrKapiw")
                     .execute();

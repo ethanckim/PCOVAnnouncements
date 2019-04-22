@@ -31,15 +31,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
         android:text="@string/nav_header_subtitle"
-        android:textSize="16sp"
+        android:textColor="@android:color/tertiary_text_light"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navheaderImageView"
-        android:textColor="@color/colorDark"/>
+        app:layout_constraintTop_toBottomOf="@+id/navheaderImageView" />
 
 
 </android.support.constraint.ConstraintLayout>

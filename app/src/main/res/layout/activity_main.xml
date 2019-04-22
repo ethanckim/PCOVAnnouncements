@@ -25,16 +25,20 @@
         app:menu="@menu/activity_main_drawer">
 
         <ImageView
-            android:layout_width="250dp"
+            android:id="@+id/nav_footer_photo"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="500dp"
             android:background="@drawable/pcov_churchphoto"
             android:contentDescription="@string/churchphoto"
             android:paddingStart="24dp"
+            android:paddingLeft="24dp"
             android:paddingEnd="0dp"
+            android:paddingRight="0dp"
             android:paddingBottom="24dp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:scaleType="fitXY"/>
 
     </android.support.design.widget.NavigationView>
 
