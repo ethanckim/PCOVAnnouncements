@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,29 +21,19 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.PlaylistItem;
-import com.google.api.services.youtube.model.PlaylistItemListResponse;
 
-import org.pcov.pcovannouncements.Adapters.YouTubeConfig;
+import org.pcov.pcovannouncements.Adapters.MakeRequestTask;
 import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
 import org.pcov.pcovannouncements.Fragments.GalleryFragment;
 import org.pcov.pcovannouncements.Fragments.InformationFragment;
 import org.pcov.pcovannouncements.Fragments.SettingsFragment;
 import org.pcov.pcovannouncements.Fragments.VideosFragment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
+    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
+    private static Fragment currentFrag = new VideosFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +53,9 @@ public class MainActivity extends AppCompatActivity
         getResultsFromApi();
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, currentFrag, currentFrag.getTag())
+                .commit();
         navigationView.setCheckedItem(R.id.nav_videos);
 
         orientationChangeSetUp();
@@ -106,6 +97,9 @@ public class MainActivity extends AppCompatActivity
             Log.w("WARNING", "WARNING: Unexpected Fragment Item has been chosen from the navigation Drawer."
                     + "\n" + "Currently set it to the settings Fragment to avoid null pointer.");
         }
+
+        currentFrag = nextFrag;
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, nextFrag, nextFrag.getTag())
                 .commit();
@@ -205,86 +199,6 @@ public class MainActivity extends AppCompatActivity
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
-    }
-
-
-    /**
-     * An asynchronous task that handles the YouTube Data API call.
-     * Placing the API calls in their own task ensures the UI stays responsive.
-     */
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
-        private YouTube mService = null;
-        private Exception mLastError = null;
-
-        MakeRequestTask() {
-            HttpTransport transport = AndroidHttp.newCompatibleTransport();
-            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-            mService = new YouTube.Builder(transport, jsonFactory, null)
-                    .setApplicationName(getString(R.string.app_name))
-                    .build();
-        }
-
-        /**
-         * Background task to call YouTube Data API.
-         * @param params no parameters needed for this task.
-         */
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            try {
-                return getDataFromApi();
-            } catch (Exception e) {
-                mLastError = e;
-                cancel(true);
-                return null;
-            }
-        }
-
-        /**
-         * Fetch information about the "Phil Church" Uploads Playlist Item.
-         * The aim is to get the videoId, which would be used to view the videos in the Youtube Viewer.
-         * @return List of Strings containing information about the channel.
-         * @throws IOException
-         */
-        private List<String> getDataFromApi() throws IOException {
-            // Get a list of up to 10 files.
-            List<String> playlistItemInfo = new ArrayList<String>();
-
-            YouTube.PlaylistItems.List request = mService.playlistItems()
-                    .list("contentDetails");
-
-            PlaylistItemListResponse response = request.setKey(YouTubeConfig.getApiKey())
-                    .setMaxResults(50L)
-                    .setPlaylistId("UUOnGdCsRfhaWsE3oFrKapiw")
-                    .execute();
-
-
-            List<PlaylistItem> playlistItems = response.getItems();
-            if (playlistItems != null) {
-                for (int i = 0; i < playlistItems.size(); i++) {
-                    PlaylistItem playlistItem = playlistItems.get(i);
-                    playlistItemInfo.add(playlistItem.getContentDetails().getVideoId());
-                }
-                //log
-                Log.d("GetFullAPI", playlistItems.toString());
-                Log.d("GetOnlyNecessaryInfo", playlistItemInfo.toString());
-            }
-            return playlistItemInfo;
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onPostExecute(List<String> output) {
-            if (output == null || output.size() == 0) {
-                //no results returned - Error!
-                Log.w("WARNING", "Warning - No results returned from Youtube Data API");
-            } else {
-                //Results returned
-            }
-        }
     }
 
 }
