@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
@@ -17,49 +16,21 @@ import org.pcov.pcovannouncements.R;
 import org.pcov.pcovannouncements.SermonCard;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SermonCardAdapter extends RecyclerView.Adapter<SermonCardAdapter.MyViewHolder> {
 
+    private static final String TAG = SermonCardAdapter.class.getSimpleName();
     private ArrayList<SermonCard> mSermonCardList;
     private OnCardClickListener mListener;
 
-    //Use interface to detect click
-    public interface OnCardClickListener {
-        //Use this method to send the position of the clicked card for the fragment.
-        void onCardClick(int position);
+
+    public SermonCardAdapter(ArrayList<SermonCard> sermonCardList) {
+        mSermonCardList = sermonCardList;
     }
 
     public void setOnClickListener(OnCardClickListener listener) {
         mListener = listener;
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public YouTubeThumbnailView mYouTubeThumbnailView;
-        public TextView mTitleTextView;
-        public TextView mSubtitleTextView;
-
-        public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
-            super(itemView);
-            mYouTubeThumbnailView = itemView.findViewById(R.id.sermon_card_imageview);
-            mTitleTextView = itemView.findViewById(R.id.sermon_title_textview);
-            mSubtitleTextView = itemView.findViewById(R.id.sermon_subtitle_textview);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onCardClick(position);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    public SermonCardAdapter(ArrayList<SermonCard> sermonCardList) {
-        mSermonCardList = sermonCardList;
     }
 
     @NonNull
@@ -73,29 +44,79 @@ public class SermonCardAdapter extends RecyclerView.Adapter<SermonCardAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder viewHolder, int i) {
-        SermonCard currentCard = mSermonCardList.get(i);
-        final String youtubeThumnailLink = currentCard.getmYoutubeThumnailLink();
+        final SermonCard currentCard = mSermonCardList.get(i);
+        final String youtubeThumnailLink = currentCard.getmVideoId();
+
+        viewHolder.mTitleTextView.setText(currentCard.getmTitleText());
 
         YouTubeThumbnailView.OnInitializedListener mOnInitializedListener;
         mOnInitializedListener = new YouTubeThumbnailView.OnInitializedListener() {
             @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
                 youTubeThumbnailLoader.setVideo(youtubeThumnailLink);
+                viewHolder.initialized = false;
+
+                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                    @Override
+                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                        //when thumbnail loaded successfully release the thumbnail loader as we are showing thumbnail in adapter
+                        youTubeThumbnailLoader.release();
+                    }
+
+                    @Override
+                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+                        //print or show error when thumbnail load failed
+                        Log.e(TAG, "Youtube Thumbnail Error");
+                        youTubeThumbnailLoader.release();
+
+                    }
+                });
             }
 
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.w("WARNING","Failed to initialize the youtube thumbnail");
+                //print or show error when initialization failed
+                Log.e(TAG, "Youtube Initialization Failure");
             }
         };
-
-        viewHolder.mYouTubeThumbnailView.initialize(YouTubeConfig.getApiKey(), mOnInitializedListener);
-        viewHolder.mTitleTextView.setText(currentCard.getmTitleText());
-        viewHolder.mSubtitleTextView.setText(currentCard.getmSubtitleText());
+        if (!viewHolder.initialized) {
+            viewHolder.initialized = true;
+            viewHolder.mYouTubeThumbnailView.initialize(YouTubeConfig.getApiKey(), mOnInitializedListener);
+        }
     }
 
     @Override
     public int getItemCount() {
         return mSermonCardList.size();
+    }
+
+    //Use interface to detect click
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public YouTubeThumbnailView mYouTubeThumbnailView;
+        public TextView mTitleTextView;
+        public boolean initialized = false;
+
+        public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
+            super(itemView);
+            mYouTubeThumbnailView = itemView.findViewById(R.id.sermon_card_imageview);
+            mTitleTextView = itemView.findViewById(R.id.sermon_title_textview);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onCardClick(position);
+                        }
+                    }
+                }
+            });
+        }
     }
 }

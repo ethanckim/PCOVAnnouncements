@@ -1,13 +1,11 @@
 package org.pcov.pcovannouncements;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,22 +15,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
-import org.pcov.pcovannouncements.Adapters.MakeRequestTask;
 import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
 import org.pcov.pcovannouncements.Fragments.GalleryFragment;
 import org.pcov.pcovannouncements.Fragments.InformationFragment;
-import org.pcov.pcovannouncements.Fragments.SettingsFragment;
 import org.pcov.pcovannouncements.Fragments.VideosFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     private static Fragment currentFrag = new VideosFragment();
 
     @Override
@@ -49,14 +40,22 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        getResultsFromApi();
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, currentFrag, currentFrag.getTag())
                 .commit();
-        navigationView.setCheckedItem(R.id.nav_videos);
+
+        if (currentFrag.equals(AnnouncementFragment.class)) {
+            navigationView.setCheckedItem(R.id.nav_announcements);
+        } else if (currentFrag.equals(InformationFragment.class)) {
+            navigationView.setCheckedItem(R.id.nav_info);
+        } else if (currentFrag.equals(GalleryFragment.class)) {
+            navigationView.setCheckedItem(R.id.nav_gallery);
+        } else {
+            navigationView.setCheckedItem(R.id.nav_videos);
+        }
 
         orientationChangeSetUp();
     }
@@ -89,13 +88,8 @@ public class MainActivity extends AppCompatActivity
             nextFrag = new GalleryFragment();
         } else if (id == R.id.nav_videos) {
             nextFrag = new VideosFragment();
-            getResultsFromApi();
-        } else if (id == R.id.nav_info) {
-            nextFrag = new InformationFragment();
         } else {
-            nextFrag = new SettingsFragment();
-            Log.w("WARNING", "WARNING: Unexpected Fragment Item has been chosen from the navigation Drawer."
-                    + "\n" + "Currently set it to the settings Fragment to avoid null pointer.");
+            nextFrag = new InformationFragment();
         }
 
         currentFrag = nextFrag;
@@ -103,7 +97,6 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, nextFrag, nextFrag.getTag())
                 .commit();
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -127,78 +120,4 @@ public class MainActivity extends AppCompatActivity
             Log.d("FooterVisibility", "Footer Image can be seen.");
         }
     }
-
-    /**
-     * Attempt to call the API, after verifying that all the preconditions are
-     * satisfied. The preconditions are: Google Play Services installed, an
-     * account was selected and the device currently has online access. If any
-     * of the preconditions are not satisfied, the app will prompt the user as
-     * appropriate.
-     */
-    private void getResultsFromApi() {
-        if (! isGooglePlayServicesAvailable()) {
-            acquireGooglePlayServices();
-        } else if (! isDeviceOnline()) {
-            Toast noInternetToast = Toast.makeText(getApplicationContext(), "No network connection available", Toast.LENGTH_SHORT);
-            noInternetToast.show();
-        } else {
-            new MakeRequestTask().execute();
-        }
-    }
-
-
-    /**
-     * Checks whether the device currently has a network connection.
-     * @return true if the device has a network connection, false otherwise.
-     */
-    private boolean isDeviceOnline() {
-        ConnectivityManager connMgr =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
-    /**
-     * Check that Google Play services APK is installed and up to date.
-     * @return true if Google Play Services is available and up to
-     *     date on this device; false otherwise.
-     */
-    private boolean isGooglePlayServicesAvailable() {
-        GoogleApiAvailability apiAvailability =
-                GoogleApiAvailability.getInstance();
-        final int connectionStatusCode =
-                apiAvailability.isGooglePlayServicesAvailable(this);
-        return connectionStatusCode == ConnectionResult.SUCCESS;
-    }
-
-    /**
-     * Attempt to resolve a missing, out-of-date, invalid or disabled Google
-     * Play Services installation via a user dialog, if possible.
-     */
-    private void acquireGooglePlayServices() {
-        GoogleApiAvailability apiAvailability =
-                GoogleApiAvailability.getInstance();
-        final int connectionStatusCode =
-                apiAvailability.isGooglePlayServicesAvailable(this);
-        if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
-            showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
-        }
-    }
-
-    /**
-     * Display an error dialog showing that Google Play Services is missing
-     * or out of date.
-     * @param connectionStatusCode code describing the presence (or lack of)
-     *     Google Play Services on this device.
-     */
-    void showGooglePlayServicesAvailabilityErrorDialog(
-            final int connectionStatusCode) {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        Dialog dialog = apiAvailability.getErrorDialog(
-                MainActivity.this,
-                connectionStatusCode,
-                REQUEST_GOOGLE_PLAY_SERVICES);
-        dialog.show();
-    }
-
 }
