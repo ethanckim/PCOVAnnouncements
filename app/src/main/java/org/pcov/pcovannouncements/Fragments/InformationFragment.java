@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import org.pcov.pcovannouncements.AboutUsWebviewActivity;
 import org.pcov.pcovannouncements.Adapters.InfoCardAdapter;
-import org.pcov.pcovannouncements.InformationCard;
+import org.pcov.pcovannouncements.DataClass.InformationCard;
 import org.pcov.pcovannouncements.R;
 
 import java.util.ArrayList;
