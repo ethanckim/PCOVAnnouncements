@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.pcov.pcovannouncements.DataClass.InformationCard;
+import org.pcov.pcovannouncements.DataClass.NewsCard;
 import org.pcov.pcovannouncements.R;
 
 import java.util.ArrayList;
 
-public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyViewHolder> {
+public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyViewHolder> {
 
-    private ArrayList<InformationCard> mInfoCardList;
+    private ArrayList<NewsCard> mNewsCardList;
     private OnCardClickListener mListener;
 
     //Use interface to detect click
@@ -30,12 +30,14 @@ public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
-        public TextView mTextView;
+        public TextView mTitleTextView;
+        public TextView mDateTextView;
 
         public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.infocardImageView);
-            mTextView = itemView.findViewById(R.id.textView);
+            mImageView = itemView.findViewById(R.id.newsCardImageView);
+            mTitleTextView = itemView.findViewById(R.id.newsTitleTextView);
+            mDateTextView = itemView.findViewById(R.id.newsDateTextView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,14 +53,14 @@ public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyView
         }
     }
 
-    public InfoCardAdapter(ArrayList<InformationCard> infoCardList) {
-        mInfoCardList = infoCardList;
+    public NewsCardAdapter(ArrayList<NewsCard> newsCardList) {
+        mNewsCardList = newsCardList;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_information, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_news, viewGroup, false);
         MyViewHolder viewHolder = new MyViewHolder(v, mListener);
 
         return viewHolder;
@@ -66,14 +68,15 @@ public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        InformationCard currentCard = mInfoCardList.get(i);
+        NewsCard currentCard = mNewsCardList.get(i);
 
-        viewHolder.mImageView.setImageResource(currentCard.getImageResource());
-        viewHolder.mTextView.setText(currentCard.getText());
+        viewHolder.mImageView.setImageResource(currentCard.getmImageResource());
+        viewHolder.mTitleTextView.setText(currentCard.getTitle());
+        viewHolder.mDateTextView.setText(currentCard.getDate());
     }
 
     @Override
     public int getItemCount() {
-        return mInfoCardList.size();
+        return mNewsCardList.size();
     }
 }

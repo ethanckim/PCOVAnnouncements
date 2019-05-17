@@ -32,8 +32,8 @@ import org.pcov.pcovannouncements.Adapters.SermonCardAdapter;
 import org.pcov.pcovannouncements.Adapters.YouTubeConfig;
 import org.pcov.pcovannouncements.PlaylistResponse;
 import org.pcov.pcovannouncements.R;
-import org.pcov.pcovannouncements.SermonCard;
-import org.pcov.pcovannouncements.VideoInfo;
+import org.pcov.pcovannouncements.DataClass.SermonCard;
+import org.pcov.pcovannouncements.DataClass.VideoInfo;
 import org.pcov.pcovannouncements.VideoViewer;
 
 import java.io.IOException;
