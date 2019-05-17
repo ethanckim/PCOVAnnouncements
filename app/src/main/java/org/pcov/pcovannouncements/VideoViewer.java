@@ -15,7 +15,6 @@ public class VideoViewer extends YouTubeBaseActivity {
     YouTubePlayerView mYoutubePlayerView;
     YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +25,10 @@ public class VideoViewer extends YouTubeBaseActivity {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 //TODO change this link to different youtube video.
-                youTubePlayer.loadVideo("ji86pAF6nYA");
+
+                String videoURL = getIntent().getStringExtra("videoURL");
+
+                youTubePlayer.loadVideo(videoURL);
                 youTubePlayer.setFullscreen(true);
                 youTubePlayer.setShowFullscreenButton(false);
             }
@@ -35,6 +37,7 @@ public class VideoViewer extends YouTubeBaseActivity {
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
                 Log.w("WARNING","Failed to initialize the youtube video player");
             }
+
         };
 
         mYoutubePlayerView.initialize(YouTubeConfig.getApiKey(), mOnInitializedListener);

@@ -2,25 +2,27 @@ package org.pcov.pcovannouncements;
 
 public class SermonCard {
 
-    private String mYoutubeThumnailLink;
+    private String mVideoId;
     private String mTitleText;
-    private String mSubtitleText;
 
-    public SermonCard(String YoutubeThumnailLink, String TitleText, String SubtitleText) {
-        this.mYoutubeThumnailLink = YoutubeThumnailLink;
-        this.mTitleText = TitleText;
-        this.mSubtitleText = SubtitleText;
+    public SermonCard(String videoId, String titleText) {
+        this.mVideoId = videoId;
+        this.mTitleText = titleText;
     }
 
-    public String getmYoutubeThumnailLink() {
-        return mYoutubeThumnailLink;
+    public String getmVideoId() {
+        return mVideoId;
     }
 
     public String getmTitleText() {
         return mTitleText;
     }
 
-    public String getmSubtitleText() {
-        return mSubtitleText;
+    public String toString() {
+        return "Sermon Card{" +
+                "videoId='" + mVideoId + '\'' +
+                ", title='" + mTitleText + '\'' +
+                '}';
     }
+
 }

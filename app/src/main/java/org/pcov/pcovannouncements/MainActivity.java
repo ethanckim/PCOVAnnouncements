@@ -1,44 +1,63 @@
 package org.pcov.pcovannouncements;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
 import org.pcov.pcovannouncements.Fragments.GalleryFragment;
 import org.pcov.pcovannouncements.Fragments.InformationFragment;
-import org.pcov.pcovannouncements.Fragments.SettingsFragment;
 import org.pcov.pcovannouncements.Fragments.VideosFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static Fragment currentFrag = new VideosFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new VideosFragment()).commit();
-        navigationView.setCheckedItem(R.id.nav_videos);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, currentFrag, currentFrag.getTag())
+                .commit();
+
+        if (currentFrag.equals(AnnouncementFragment.class)) {
+            navigationView.setCheckedItem(R.id.nav_announcements);
+        } else if (currentFrag.equals(InformationFragment.class)) {
+            navigationView.setCheckedItem(R.id.nav_info);
+        } else if (currentFrag.equals(GalleryFragment.class)) {
+            navigationView.setCheckedItem(R.id.nav_gallery);
+        } else {
+            navigationView.setCheckedItem(R.id.nav_videos);
+        }
+
+        orientationChangeSetUp();
     }
 
     public void setActionBarTitle(String title) {
@@ -47,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -69,20 +88,36 @@ public class MainActivity extends AppCompatActivity
             nextFrag = new GalleryFragment();
         } else if (id == R.id.nav_videos) {
             nextFrag = new VideosFragment();
-        } else if (id == R.id.nav_info) {
-            nextFrag = new InformationFragment();
         } else {
-            nextFrag = new SettingsFragment();
-            Log.w("WARNING", "WARNING: Unexpected Fragment Item has been chosen from the navigation Drawer."
-                    + "\n" + "Currently set it to the settings Fragment to avoid null pointer.");
+            nextFrag = new InformationFragment();
         }
+
+        currentFrag = nextFrag;
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, nextFrag, nextFrag.getTag())
                 .commit();
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Makes necessary changes Orientation is changed (Landscape/Portrait)
+     */
+    public void orientationChangeSetUp() {
+
+        int newOrientation = this.getResources().getConfiguration().orientation;
+
+        ImageView footerPhoto = findViewById(R.id.nav_footer_photo);
+
+        if (newOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            footerPhoto.setVisibility(View.INVISIBLE);
+            Log.d("FooterVisibility", "Footer Image is invisible so the user can click buttons");
+        } else {
+            footerPhoto.setVisibility(View.VISIBLE);
+            Log.d("FooterVisibility", "Footer Image can be seen.");
+        }
     }
 }
