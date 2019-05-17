@@ -13,10 +13,9 @@ import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import org.pcov.pcovannouncements.R;
-import org.pcov.pcovannouncements.SermonCard;
+import org.pcov.pcovannouncements.DataClass.SermonCard;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SermonCardAdapter extends RecyclerView.Adapter<SermonCardAdapter.MyViewHolder> {
 

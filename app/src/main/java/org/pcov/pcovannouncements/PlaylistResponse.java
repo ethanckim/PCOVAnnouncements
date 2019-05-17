@@ -2,6 +2,8 @@ package org.pcov.pcovannouncements;
 
 import android.support.annotation.NonNull;
 
+import org.pcov.pcovannouncements.DataClass.VideoInfo;
+
 import java.util.List;
 
 public class PlaylistResponse {

@@ -1,4 +1,4 @@
-package org.pcov.pcovannouncements;
+package org.pcov.pcovannouncements.DataClass;
 
 public class SermonCard {
 
