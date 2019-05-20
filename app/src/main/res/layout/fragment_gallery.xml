@@ -5,4 +5,9 @@
     android:id="@+id/galleryRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.InformationFragment" />
+    android:layout_marginTop="56dp"
+    android:scrollbars="vertical"
+    android:visibility="visible"
+    tools:context=".Fragments.GalleryFragment">
+
+</android.support.v7.widget.RecyclerView>

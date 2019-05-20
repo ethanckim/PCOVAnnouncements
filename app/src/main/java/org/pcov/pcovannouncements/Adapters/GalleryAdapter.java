@@ -1,64 +1,83 @@
 package org.pcov.pcovannouncements.Adapters;
 
 import android.content.Context;
-import android.provider.Contacts;
+import android.media.Image;
+import android.media.ImageReader;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
+
+import org.pcov.pcovannouncements.DataClass.ImageCard;
+import org.pcov.pcovannouncements.DataClass.SermonCard;
 import org.pcov.pcovannouncements.R;
-import org.pcov.pcovannouncements.UniversalImageLoader;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder> {
     private static final String TAG = "GalleryAdapter";
     private static final int NUM_GRID_COLUMNS = 3;
 
-    private ArrayList<Gallery> mPhotos;
     private Context mContext;
 
-    public class GalleryViewHolder extends RecyclerView.ViewHolder {
+    List<ImageCard> images;
 
-        ImageView image;
+    public static class GalleryViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImage;
+        public TextView mText;
 
-        public GalleryViewHolder(@NonNull View itemView, ImageView postImage) {
+        public GalleryViewHolder(View itemView, List<ImageCard> imgArray, Context mContext) {
             super(itemView);
-            RecyclerView recyclerView;
-            image = postImage;
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.galleryRecyclerView);
+            mImage = itemView.findViewById(R.id.galleryImageView);
+            mText = itemView.findViewById(R.id.galleryTextView);
+            RecyclerView recyclerView = (RecyclerView) itemView.findViewById(R.id.galleryRecyclerView);
             int gridWidth = mContext.getResources().getDisplayMetrics().widthPixels;
             int imageWidth = gridWidth/NUM_GRID_COLUMNS;
-            image.setMaxHeight(imageWidth);
-            image.setMaxWidth(imageWidth);
+
+            for(ImageCard k: imgArray) {
+//                k.getmImageId(imageWidth);
+//                k.setMaxWidth(imageWidth);
+//
+//                recyclerView.addView(k.toString());
+            }
+
+//            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 
-    public GalleryAdapter(Context mContext, ArrayList list) {
+    public GalleryAdapter(Context mContext, ArrayList<ImageCard> list) {
         this.mContext = mContext;
-        this.mPhotos = list;
+        this.images = list;
     }
 
     @NonNull
     @Override
     public GalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_gallery, parent, false  );
-        return new GalleryViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
+        return new GalleryViewHolder(view, images, parent.getContext());
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GalleryViewHolder holder, final int position) {
-        UniversalImageLoader.setImage(mPhotos.get(position).ge, holder.image);
+    public void onBindViewHolder(@NonNull final GalleryAdapter.GalleryViewHolder viewHolder, final int position) {
+        ImageCard currentCard = images.get(position);
+        viewHolder.mText.setText(currentCard.getmImageText());
+        viewHolder.mImage.setImageResource(R.drawable.pcov_churchphoto);
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return images.size();
     }
 }
