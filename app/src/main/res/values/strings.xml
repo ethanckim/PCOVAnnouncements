@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PCOV Announcements</string>
+    <string name="app_name">PCOV</string>
 
     <!-- Navigation Drawer Strings -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

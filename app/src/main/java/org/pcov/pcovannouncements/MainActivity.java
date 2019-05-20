@@ -85,12 +85,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_announcements) {
             nextFrag = new AnnouncementFragment();
+            getSupportActionBar().setTitle(R.string.nav_select_announcements);
         } else if (id == R.id.nav_gallery) {
             nextFrag = new GalleryFragment();
+            getSupportActionBar().setTitle(R.string.nav_select_gallery);
         } else if (id == R.id.nav_videos) {
             nextFrag = new VideosFragment();
+            getSupportActionBar().setTitle(R.string.nav_select_sermons);
         } else {
             nextFrag = new InformationFragment();
+            getSupportActionBar().setTitle(R.string.nav_select_information);
         }
 
         currentFrag = nextFrag;

@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.pcov.pcovannouncements.AboutUsWebviewActivity;
 import org.pcov.pcovannouncements.Adapters.InfoCardAdapter;
 import org.pcov.pcovannouncements.Adapters.NewsCardAdapter;
+import org.pcov.pcovannouncements.AnnouncementsTextActivity;
 import org.pcov.pcovannouncements.DataClass.InformationCard;
 import org.pcov.pcovannouncements.DataClass.NewsCard;
 import org.pcov.pcovannouncements.MainActivity;
@@ -49,12 +50,6 @@ public class AnnouncementFragment extends Fragment {
 
         mNewsList = new ArrayList<>();
         getListItems();
-
-        mNewsList.add(new NewsCard(R.drawable.ic_arrow_forward, "PLACEHOLDER1", "PLACEHOLDER1", "nothing"));
-        mNewsList.add(new NewsCard(R.drawable.ic_arrow_forward, "PLACEHOLDER2", "PLACEHOLDER2", "nothing"));
-        mNewsList.add(new NewsCard(R.drawable.ic_arrow_forward, "PLACEHOLDER3", "PLACEHOLDER3", "nothing"));
-        mNewsList.add(new NewsCard(R.drawable.ic_arrow_forward, "PLACEHOLDER4", "PLACEHOLDER4", "nothing"));
-        mNewsList.add(new NewsCard(R.drawable.ic_arrow_forward, "PLACEHOLDER5", "PLACEHOLDER5", "nothing"));
     }
 
     @Nullable
@@ -78,8 +73,9 @@ public class AnnouncementFragment extends Fragment {
                 //Navigate to the new activity, based off the card (Use position the distinguish cards)
                 Intent i;
                 //TODO Change Activity to Navigate to.
-                i = new Intent(getActivity(), AboutUsWebviewActivity.class);
-                i.putExtra("position", position);
+                i = new Intent(getActivity(), AnnouncementsTextActivity.class);
+                i.putExtra("newsCardContext", mNewsList.get(position).getContext());
+                i.putExtra("newsCardDate", mNewsList.get(position).getDate());
                 startActivity(i);
 
             }

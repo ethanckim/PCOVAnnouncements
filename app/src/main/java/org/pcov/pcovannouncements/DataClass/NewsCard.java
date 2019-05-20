@@ -2,14 +2,12 @@ package org.pcov.pcovannouncements.DataClass;
 
 public class NewsCard {
 
-    private int mImageResource;
-    private String title;
+    private String type;
     private String date;
     private String context;
 
-    public NewsCard(int mImageResourceString, String title, String date, String context) {
-        this.mImageResource = mImageResource;
-        this.title = title;
+    public NewsCard(String type, String date, String context) {
+        this.type = type;
         this.date = date;
         this.context = context;
     }
@@ -17,12 +15,8 @@ public class NewsCard {
     public NewsCard() {
     }
 
-    public int getmImageResource() {
-        return mImageResource;
-    }
-
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
     public String getDate() {
@@ -36,8 +30,7 @@ public class NewsCard {
     @Override
     public String toString() {
         return "NewsCard{" +
-                "mImageResource=" + mImageResource +
-                ", title='" + title + '\'' +
+                " title='" + type + '\'' +
                 ", date='" + date + '\'' +
                 ", context='" + context + '\'' +
                 '}';

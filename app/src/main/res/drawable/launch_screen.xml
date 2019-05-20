@@ -9,7 +9,7 @@
     <!-- product logo - 144dp color version of your app icon -->
     <item>
         <bitmap
-            android:src="@drawable/pcov_logo"
+            android:src="@drawable/pcov_logo_vertical"
             android:gravity="center"/>
     </item>
 
