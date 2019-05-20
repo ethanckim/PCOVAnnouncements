@@ -5,11 +5,16 @@ public class NewsCard {
     private int mImageResource;
     private String title;
     private String date;
+    private String context;
 
-    public NewsCard(int mImageResourceString, String title, String date) {
+    public NewsCard(int mImageResourceString, String title, String date, String context) {
         this.mImageResource = mImageResource;
         this.title = title;
         this.date = date;
+        this.context = context;
+    }
+
+    public NewsCard() {
     }
 
     public int getmImageResource() {
@@ -24,4 +29,17 @@ public class NewsCard {
         return date;
     }
 
+    public String getContext() {
+        return context;
+    }
+
+    @Override
+    public String toString() {
+        return "NewsCard{" +
+                "mImageResource=" + mImageResource +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", context='" + context + '\'' +
+                '}';
+    }
 }
