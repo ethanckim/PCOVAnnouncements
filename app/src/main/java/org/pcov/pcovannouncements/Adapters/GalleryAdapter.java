@@ -1,24 +1,15 @@
 package org.pcov.pcovannouncements.Adapters;
 
 import android.content.Context;
-import android.media.Image;
-import android.media.ImageReader;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubeThumbnailLoader;
-import com.google.android.youtube.player.YouTubeThumbnailView;
-
 import org.pcov.pcovannouncements.DataClass.ImageCard;
-import org.pcov.pcovannouncements.DataClass.SermonCard;
 import org.pcov.pcovannouncements.R;
 
 import java.util.ArrayList;
@@ -45,14 +36,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
             int gridWidth = mContext.getResources().getDisplayMetrics().widthPixels;
             int imageWidth = gridWidth/NUM_GRID_COLUMNS;
 
-            for(ImageCard k: imgArray) {
-//                k.getmImageId(imageWidth);
-//                k.setMaxWidth(imageWidth);
-//
-//                recyclerView.addView(k.toString());
-            }
-
-//            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 

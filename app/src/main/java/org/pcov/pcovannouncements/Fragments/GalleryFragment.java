@@ -1,6 +1,5 @@
 package org.pcov.pcovannouncements.Fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,14 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Gallery;
-import android.widget.ImageView;
 
 import org.pcov.pcovannouncements.Adapters.GalleryAdapter;
-import org.pcov.pcovannouncements.Adapters.SermonCardAdapter;
 import org.pcov.pcovannouncements.DataClass.ImageCard;
-import org.pcov.pcovannouncements.DataClass.SermonCard;
-import org.pcov.pcovannouncements.MainActivity;
 import org.pcov.pcovannouncements.R;
 
 import java.util.ArrayList;
