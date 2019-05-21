@@ -43,5 +43,7 @@ dependencies {
 
     implementation 'com.google.apis:google-api-services-youtube:v3-rev209-1.25.0'
     implementation 'com.google.api-client:google-api-client-android:1.25.0'
+
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }
 apply plugin: 'com.google.gms.google-services'
