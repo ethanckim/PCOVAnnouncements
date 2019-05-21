@@ -24,7 +24,6 @@ public class VideoViewer extends YouTubeBaseActivity {
         mOnInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                //TODO change this link to different youtube video.
 
                 String videoURL = getIntent().getStringExtra("videoURL");
 
