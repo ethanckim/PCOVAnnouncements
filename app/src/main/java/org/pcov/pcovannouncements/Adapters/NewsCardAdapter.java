@@ -79,16 +79,14 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyView
         else
             viewHolder.mImageView.setImageResource(R.drawable.icons_newsfeed_50);
 
-        String context = "";
-        String[] splitContextByLine = currentCard.getContext().split("\\" + "r" + "\\" + "n");
-        for (String oneLine : splitContextByLine) {
-            context = context + oneLine + "\r\n";
-        }
+        String context = currentCard.getContext();
+        context = context.replace("\\r", "   ");
+        context = context.replace("\\t", " ");
 
-        if (context.length() < 100)
+        if (context.length() < 60)
             viewHolder.mContextPreviewView.setText(context);
         else
-            viewHolder.mContextPreviewView.setText(context.substring(0, 99));
+            viewHolder.mContextPreviewView.setText(context.substring(0, 59) + " ...");
 
         viewHolder.mDateTextView.setText(currentCard.getDate());
     }

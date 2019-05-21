@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class AnnouncementsTextActivity extends AppCompatActivity {
@@ -15,12 +16,9 @@ public class AnnouncementsTextActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TextView txtContext = findViewById(R.id.txtContext);
 
-        String context = "";
-        String[] splitContextByLine = getIntent().getStringExtra("newsCardContext").split("\\" + "r" + "\\" + "n");
-        for (String oneLine : splitContextByLine) {
-            context = context + oneLine + "\n";
-        }
-
+        String context = getIntent().getStringExtra("newsCardContext");
+        context = context.replace("\\r", "\n");
+        context = context.replace("\\t", "    ");
         String date = getIntent().getStringExtra("newsCardDate");
 
         getSupportActionBar().setTitle(date);
