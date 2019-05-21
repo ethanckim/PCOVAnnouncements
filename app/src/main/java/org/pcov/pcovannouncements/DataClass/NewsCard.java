@@ -2,26 +2,37 @@ package org.pcov.pcovannouncements.DataClass;
 
 public class NewsCard {
 
-    private int mImageResource;
-    private String title;
+    private String type;
     private String date;
+    private String context;
 
-    public NewsCard(int mImageResourceString, String title, String date) {
-        this.mImageResource = mImageResource;
-        this.title = title;
+    public NewsCard(String type, String date, String context) {
+        this.type = type;
         this.date = date;
+        this.context = context;
     }
 
-    public int getmImageResource() {
-        return mImageResource;
+    public NewsCard() {
     }
 
-    public String getTitle() {
-        return title;
+    public String getType() {
+        return type;
     }
 
     public String getDate() {
         return date;
     }
 
+    public String getContext() {
+        return context;
+    }
+
+    @Override
+    public String toString() {
+        return "NewsCard{" +
+                " title='" + type + '\'' +
+                ", date='" + date + '\'' +
+                ", context='" + context + '\'' +
+                '}';
+    }
 }

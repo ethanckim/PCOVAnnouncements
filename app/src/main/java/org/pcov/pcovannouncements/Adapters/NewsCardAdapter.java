@@ -30,14 +30,14 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
-        public TextView mTitleTextView;
         public TextView mDateTextView;
+        public TextView mContextPreviewView;
 
         public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.newsCardImageView);
-            mTitleTextView = itemView.findViewById(R.id.newsTitleTextView);
             mDateTextView = itemView.findViewById(R.id.newsDateTextView);
+            mContextPreviewView = itemView.findViewById(R.id.newsPreviewContextTextView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,8 +70,26 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
         NewsCard currentCard = mNewsCardList.get(i);
 
-        viewHolder.mImageView.setImageResource(currentCard.getmImageResource());
-        viewHolder.mTitleTextView.setText(currentCard.getTitle());
+        if (currentCard.getType().equals("announce"))
+            viewHolder.mImageView.setImageResource(R.drawable.icons_megaphone_50);
+        else if (currentCard.getType().equals("emergency"))
+            viewHolder.mImageView.setImageResource(R.drawable.icons_siren_50);
+        else if (currentCard.getType().equals("notification"))
+            viewHolder.mImageView.setImageResource(R.drawable.icons_megaphone_50);
+        else
+            viewHolder.mImageView.setImageResource(R.drawable.icons_newsfeed_50);
+
+        String context = "";
+        String[] splitContextByLine = currentCard.getContext().split("\\" + "r" + "\\" + "n");
+        for (String oneLine : splitContextByLine) {
+            context = context + oneLine + "\r\n";
+        }
+
+        if (context.length() < 100)
+            viewHolder.mContextPreviewView.setText(context);
+        else
+            viewHolder.mContextPreviewView.setText(context.substring(0, 99));
+
         viewHolder.mDateTextView.setText(currentCard.getDate());
     }
 
