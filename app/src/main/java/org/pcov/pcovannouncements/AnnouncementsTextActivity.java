@@ -25,4 +25,16 @@ public class AnnouncementsTextActivity extends AppCompatActivity {
         txtContext.setText(context);
         txtContext.setMovementMethod(new ScrollingMovementMethod());
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the back button on the main android toolbar.
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

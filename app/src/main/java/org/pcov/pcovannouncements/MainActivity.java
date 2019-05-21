@@ -61,10 +61,6 @@ public class MainActivity extends AppCompatActivity
         orientationChangeSetUp();
     }
 
-    public void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

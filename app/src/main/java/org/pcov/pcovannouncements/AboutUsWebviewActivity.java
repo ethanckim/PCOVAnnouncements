@@ -2,6 +2,7 @@ package org.pcov.pcovannouncements;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,7 +16,6 @@ public class AboutUsWebviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aboutus_webview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         webView = findViewById(R.id.about_us_webview);
         webView.setWebViewClient(new WebViewClient());
 
@@ -46,5 +46,17 @@ public class AboutUsWebviewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the back button on the main android toolbar.
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

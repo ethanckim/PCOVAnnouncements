@@ -72,7 +72,6 @@ public class AnnouncementFragment extends Fragment {
             public void onCardClick(int position) {
                 //Navigate to the new activity, based off the card (Use position the distinguish cards)
                 Intent i;
-                //TODO Change Activity to Navigate to.
                 i = new Intent(getActivity(), AnnouncementsTextActivity.class);
                 i.putExtra("newsCardContext", mNewsList.get(position).getContext());
                 i.putExtra("newsCardDate", mNewsList.get(position).getDate());
@@ -113,4 +112,6 @@ public class AnnouncementFragment extends Fragment {
             }
         });
     }
+
+
 }
