@@ -2,31 +2,43 @@ package org.pcov.pcovannouncements;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
 import java.util.Random;
 
 public class FirebaseNotifications extends FirebaseMessagingService {
     private static final String TAG = "Firebase Notifications";
     private static final String NOTIFICATION_CHANNEL_ID  = "org.pcov.notifications";
 
-    public FirebaseNotifications() {
-
-    }
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // TODO(developer): Handle FCM messages here.
-        String title = remoteMessage.getNotification().getTitle();
-        String body = remoteMessage.getNotification().getBody();
+        super.onMessageReceived(remoteMessage);
+
+        if (remoteMessage.getData().isEmpty()) {
+            String title = remoteMessage.getNotification().getTitle();
+            String body = remoteMessage.getNotification().getBody();
+            sendNotification(title, body);
+        } else {
+            sendNotification(remoteMessage.getData());
+        }
+    }
+
+    private void sendNotification(Map<String, String> data) {
+        String title = data.get("title");
+        String body = data.get("body");
+
         sendNotification(title, body);
     }
 
@@ -37,19 +49,29 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         //notification channels APIs are not available in the support library for lower v.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
-                    "name (Change later)", NotificationManager.IMPORTANCE_DEFAULT);
+                    "Subscription", NotificationManager.IMPORTANCE_DEFAULT);
             notificationChannel.setLightColor(Color.CYAN);
             notificationChannel.enableLights(true);
             notificationChannel.setDescription(getString(R.string.firebase_notification_description));
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
+        // Create an Intent for the activity you want to start
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        // Create the TaskStackBuilder and add the intent, which inflates the back stack
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        // Get the PendingIntent containing the entire back stack
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         notificationBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setContentInfo("info (Change later)");
+                .setContentInfo("Notifications of New Videos and Announcements")
+                .setContentIntent(resultPendingIntent);
 
         notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
 
@@ -62,9 +84,8 @@ public class FirebaseNotifications extends FirebaseMessagingService {
      */
     @Override
     public void onNewToken(String s) {
+        super.onNewToken(s);
         Log.d(TAG, "Token: " + s);
     }
-
-
 
 }
