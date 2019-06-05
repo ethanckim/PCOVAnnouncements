@@ -57,7 +57,7 @@ public class GalleryFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         madapter = new GalleryAdapter(getContext(), mGalleryList);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         recyclerView.setAdapter(madapter);
 
         return v;
