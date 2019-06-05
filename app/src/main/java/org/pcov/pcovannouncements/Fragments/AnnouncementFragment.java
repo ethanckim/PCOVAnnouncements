@@ -1,6 +1,8 @@
 package org.pcov.pcovannouncements.Fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,7 +72,7 @@ public class AnnouncementFragment extends Fragment {
         adapter.setOnClickListener(new NewsCardAdapter.OnCardClickListener() {
             @Override
             public void onCardClick(int position) {
-                //Navigate to the new activity, based off the card (Use position the distinguish cards)
+                //Navigate to the new activity, based off the card (Use position to distinguish cards)
                 Intent i;
                 i = new Intent(getActivity(), AnnouncementsTextActivity.class);
                 i.putExtra("newsCardContext", mNewsList.get(position).getContext());

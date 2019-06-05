@@ -19,6 +19,10 @@
     <string name="church_history">연혁</string>
     <string name="visit_us">연락과 찾아오시는 길</string>
 
+    <string name="churchphoto">교회 사진</string>
 
+    <string name="title_activity_video_viewer">비디오 뷰어</string>
+
+    <string name="firebase_notification_description">알림</string>
 
 </resources>
