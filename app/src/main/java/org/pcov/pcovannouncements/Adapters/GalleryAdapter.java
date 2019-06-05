@@ -55,8 +55,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     public void onBindViewHolder(@NonNull final GalleryAdapter.GalleryViewHolder viewHolder, final int position) {
         ImageCard currentCard = images.get(position);
         viewHolder.mText.setText(currentCard.getmImageText());
-        viewHolder.mImage.setImageResource(R.drawable.pcov_churchphoto);
-
+        viewHolder.mImage.setImageResource(currentCard.getmImageId());
     }
 
     @Override
