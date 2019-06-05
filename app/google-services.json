@@ -15,12 +15,24 @@
       },
       "oauth_client": [
         {
+          "client_id": "169269112438-8e2mvo9l9i25iocjlbr6o58jsbddvdfb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.pcov.pcovannouncements",
+            "certificate_hash": "ef2ce54c0216080121d7874f608fd6883b62c68b"
+          }
+        },
+        {
           "client_id": "169269112438-qg3731qp2d4vvd0aep3tfjkkjqsep55u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "org.pcov.pcovannouncements",
             "certificate_hash": "04d2a8533183002391e012ec0517e3940866d2d5"
           }
+        },
+        {
+          "client_id": "169269112438-h646jhi9q8goqeoseecjjk4poomjdmvg.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
