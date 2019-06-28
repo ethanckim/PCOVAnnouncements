@@ -21,8 +21,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     private static final int NUM_GRID_COLUMNS = 3;
 
     private Context mContext;
-
     List<ImageCard> images;
+    private GalleryAdapter.OnCardClickListener mListener;
 
     public static class GalleryViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImage;
@@ -62,4 +62,37 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     public int getItemCount() {
         return images.size();
     }
+
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
+    }
+
+    public void setOnClickListener(GalleryAdapter.OnCardClickListener listener) {
+        mListener = listener;
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mTextView;
+
+        public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.galleryImageView);
+            mTextView = itemView.findViewById(R.id.galleryTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onCardClick(position);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 }

@@ -1,10 +1,10 @@
 package org.pcov.pcovannouncements.Fragments;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,19 +22,19 @@ public class InformationFragment extends Fragment {
 
     private View v;
     private RecyclerView mRecyclerView;
-    private ArrayList<InformationCard> minformationList;
+    private ArrayList<InformationCard> mInformationList;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        minformationList = new ArrayList<>();
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.about_us)));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.for_newcomers)));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.worship_services)));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.church_history)));
-        minformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.visit_us)));
+        mInformationList = new ArrayList<>();
+        mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.about_us)));
+        mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.for_newcomers)));
+        mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.worship_services)));
+        mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.church_history)));
+        mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.visit_us)));
     }
 
     @Nullable
@@ -46,7 +46,7 @@ public class InformationFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.infoRecyclerView);
         mRecyclerView.setHasFixedSize(true);
 
-        InfoCardAdapter adapter = new InfoCardAdapter(minformationList);
+        InfoCardAdapter adapter = new InfoCardAdapter(mInformationList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(adapter);
 

@@ -1,5 +1,6 @@
 package org.pcov.pcovannouncements.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,8 +21,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.pcov.pcovannouncements.Adapters.GalleryAdapter;
+import org.pcov.pcovannouncements.Adapters.NewsCardAdapter;
+import org.pcov.pcovannouncements.AnnouncementsTextActivity;
 import org.pcov.pcovannouncements.DataClass.ImageCard;
 import org.pcov.pcovannouncements.DataClass.NewsCard;
+import org.pcov.pcovannouncements.GalleryExtendActivity;
 import org.pcov.pcovannouncements.R;
 
 import java.io.File;
@@ -59,6 +63,18 @@ public class GalleryFragment extends Fragment {
         madapter = new GalleryAdapter(getContext(), mGalleryList);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         recyclerView.setAdapter(madapter);
+
+        madapter.setOnClickListener(new GalleryAdapter.OnCardClickListener() {
+            @Override
+            public void onCardClick (int position) {
+                //Navigate to the new activity, based off the card (Use position to distinguish cards)
+                Intent i;
+                i = new Intent(getActivity(), GalleryExtendActivity.class);
+                i.putExtra("imageID", mGalleryList.get(position).getmImageId());
+                i.putExtra("imageText", mGalleryList.get(position).getmImageText());
+                startActivity(i);
+            }
+        });
 
         return v;
     }
