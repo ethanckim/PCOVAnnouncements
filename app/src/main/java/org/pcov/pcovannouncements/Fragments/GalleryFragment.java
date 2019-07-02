@@ -111,7 +111,7 @@ public class GalleryFragment extends Fragment {
 //        });
 //
 //
-        mGalleryList.add(new ImageCard(R.drawable.one, ""));
+        mGalleryList.add(new ImageCard(R.drawable.one, "Testing fajfdljfl;ajl;gjlajsdlfjsdljag \n"));
         mGalleryList.add(new ImageCard(R.drawable.two, ""));
         mGalleryList.add(new ImageCard(R.drawable.three, ""));
         mGalleryList.add(new ImageCard(R.drawable.four, ""));
