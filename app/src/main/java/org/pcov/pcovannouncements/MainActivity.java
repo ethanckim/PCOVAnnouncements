@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             nextFrag = new GalleryFragment();
             getSupportActionBar().setTitle(R.string.nav_select_gallery);
-       // }else if (id == R.id.nav_info) {
-            //nextFrag = new InformationFragment();
+        }else if (id == R.id.nav_info) {
+            nextFrag = new InformationFragment();
             getSupportActionBar().setTitle(R.string.nav_select_information);
         } else {
             nextFrag = new VideosFragment();
