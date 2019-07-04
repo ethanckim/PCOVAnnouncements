@@ -16,28 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder> {
+public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
     private static final String TAG = "GalleryAdapter";
     private static final int NUM_GRID_COLUMNS = 3;
 
     private Context mContext;
-
     List<ImageCard> images;
-
-    public static class GalleryViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImage;
-        public TextView mText;
-
-        public GalleryViewHolder(View itemView, List<ImageCard> imgArray, Context mContext) {
-            super(itemView);
-            mImage = itemView.findViewById(R.id.galleryImageView);
-            mText = itemView.findViewById(R.id.galleryTextView);
-            RecyclerView recyclerView = (RecyclerView) itemView.findViewById(R.id.galleryRecyclerView);
-            int gridWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-            int imageWidth = gridWidth/NUM_GRID_COLUMNS;
-
-        }
-    }
+    private GalleryAdapter.OnCardClickListener mListener;
 
     public GalleryAdapter(Context mContext, ArrayList<ImageCard> list) {
         this.mContext = mContext;
@@ -46,20 +31,55 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
 
     @NonNull
     @Override
-    public GalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
-        return new GalleryViewHolder(view, images, parent.getContext());
+        GalleryAdapter.MyViewHolder viewHolder = new GalleryAdapter.MyViewHolder(view, mListener);
+        return viewHolder;
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final GalleryAdapter.GalleryViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, final int position) {
         ImageCard currentCard = images.get(position);
-        viewHolder.mText.setText(currentCard.getmImageText());
-        viewHolder.mImage.setImageResource(currentCard.getmImageId());
+        viewHolder.mTextView.setText(currentCard.getmImageText());
+        viewHolder.mImageView.setImageResource(currentCard.getmImageId());
     }
 
     @Override
     public int getItemCount() {
         return images.size();
     }
+
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
+    }
+
+    public void setOnClickListener(GalleryAdapter.OnCardClickListener listener) {
+        mListener = listener;
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mTextView;
+
+        public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.galleryImageView);
+            mTextView = itemView.findViewById(R.id.galleryTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onCardClick(position);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 }

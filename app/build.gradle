@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "org.pcov.pcovannouncements"
-        minSdkVersion 16
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -43,5 +43,6 @@ dependencies {
     implementation 'com.google.api-client:google-api-client-android:1.25.0'
 
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 }
 apply plugin: 'com.google.gms.google-services'
