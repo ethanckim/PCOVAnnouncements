@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pcov-2019"
+    "default": "pcov-2019",
+    "staging": "pcov-2019"
   }
 }
