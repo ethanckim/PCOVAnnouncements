@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
 import org.pcov.pcovannouncements.Fragments.GalleryFragment;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity
 
         //FCM Token
         getFirebaseInstanceId();
+        //For back-end FCM automatic sending
+        FirebaseMessaging.getInstance().subscribeToTopic("Announcements");
     }
 
 

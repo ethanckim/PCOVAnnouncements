@@ -1,6 +1,6 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "cloud-firestore-fcm-notifications-functions",
+  "description": "Send FCM notifications when announcements database changes.",
   "scripts": {
     "lint": "eslint .",
     "serve": "firebase serve --only functions",
