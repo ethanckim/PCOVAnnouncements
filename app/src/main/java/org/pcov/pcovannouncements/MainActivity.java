@@ -1,10 +1,14 @@
 package org.pcov.pcovannouncements;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,10 +18,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -29,6 +35,8 @@ import org.pcov.pcovannouncements.Fragments.VideosFragment;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.opencensus.common.Function;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,6 +66,25 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, currentFrag, currentFrag.getTag())
                 .commit();
+
+        String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        int permissionWriteExternal = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permissionReadExternal = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permissionWriteExternal != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
+        } else if (permissionReadExternal != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
+        }
+
+        if (permissionWriteExternal == PackageManager.PERMISSION_GRANTED && permissionReadExternal == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getBaseContext(), "Image Download and Share will Work",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getBaseContext(), "Image Download and Share WILL NOT Work",
+                    Toast.LENGTH_LONG).show();
+        }
 
         if (currentFrag.equals(AnnouncementFragment.class)) {
             navigationView.setCheckedItem(R.id.nav_announcements);
