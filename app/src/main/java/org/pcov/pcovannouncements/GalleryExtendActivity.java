@@ -86,7 +86,7 @@ public class GalleryExtendActivity extends AppCompatActivity {
             case R.id.action_download:
                 Intent downloadIntent = downloadImage();
                 sendBroadcast(downloadIntent);
-                Toast.makeText(getBaseContext(), "Button Clicked",
+                Toast.makeText(getBaseContext(), "Image Downloaded",
                         Toast.LENGTH_SHORT).show();
                 return true;
             default:
