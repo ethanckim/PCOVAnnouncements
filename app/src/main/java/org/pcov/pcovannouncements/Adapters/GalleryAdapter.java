@@ -27,14 +27,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private GalleryAdapter.OnCardClickListener mListener;
 
     public GalleryAdapter(Context mContext, ArrayList<ImageCard> list) {
-        this.mContext = mContext;
+        this.context = mContext;
         this.images = list;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
         GalleryAdapter.MyViewHolder viewHolder = new GalleryAdapter.MyViewHolder(view, mListener);
         return viewHolder;
 

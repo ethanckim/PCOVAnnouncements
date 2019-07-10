@@ -1,5 +1,7 @@
 package org.pcov.pcovannouncements.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,6 +51,8 @@ public class GalleryFragment extends Fragment {
         mStorage = FirebaseStorage.getInstance();
         mDatabase = FirebaseFirestore.getInstance();
         mGalleryList = new ArrayList<>();
+        context = getContext();
+        activity = getActivity();
 
     }
 

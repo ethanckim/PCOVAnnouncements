@@ -53,6 +53,8 @@ public class GalleryExtendActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
         getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent mIntent = getIntent();
+        int imageID;
 
         mImageView = (ImageView) findViewById(R.id.galleryImageView);
         mTextView = (TextView) findViewById(R.id.galleryImageTag);
@@ -90,13 +92,18 @@ public class GalleryExtendActivity extends AppCompatActivity {
                 return true;
             case R.id.action_share:
                 Intent shareIntent = createShareImageIntent();
-                startActivity(shareIntent);
-                return true;
+
+                if (shareIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(shareIntent);
+                    return true;
+                }
+
+                Toast.makeText(getBaseContext(), "Error Sharing", Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
             case R.id.action_download:
                 Intent downloadIntent = downloadImage();
                 sendBroadcast(downloadIntent);
-                Toast.makeText(getBaseContext(), "Image Downloaded",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Image Downloaded", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
