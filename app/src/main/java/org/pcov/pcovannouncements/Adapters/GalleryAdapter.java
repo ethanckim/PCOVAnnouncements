@@ -49,6 +49,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 .fit()
                 .centerCrop()
                 .into(viewHolder.mImageView);
+        viewHolder.mTextView.setText(" " + uploadCurrent.getTag() + " ");
     }
 
     @Override
@@ -59,10 +60,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder     {
         public ImageView mImageView;
+        public TextView mTextView;
 
         public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.galleryImageView);
+            mTextView = itemView.findViewById(R.id.galleryImageTag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

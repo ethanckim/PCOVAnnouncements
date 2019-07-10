@@ -22,11 +22,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,6 +43,7 @@ public class GalleryExtendActivity extends AppCompatActivity {
     private static final String IMAGE_SHARE_HASHTAG = " #PCOVApp";
 
     private ImageView mImageView;
+    private TextView mTextView;
     private ScaleGestureDetector mScaleGestureDetector;
     private float mScaleFactor = 1.0f;
 
@@ -50,6 +55,7 @@ public class GalleryExtendActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mImageView = (ImageView) findViewById(R.id.galleryImageView);
+        mTextView = (TextView) findViewById(R.id.galleryImageTag);
 
         String imageUrl = getIntent().getStringExtra("imageUrl");
         String imageTag = getIntent().getStringExtra("imageTag");
@@ -58,8 +64,11 @@ public class GalleryExtendActivity extends AppCompatActivity {
                 .load(imageUrl)
                 .into(mImageView);
 
+        mTextView.setText(imageTag);
+
         //For pinch & zoom
         mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+
     }
 
     @Override
