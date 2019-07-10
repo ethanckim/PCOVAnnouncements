@@ -1,26 +1,40 @@
 package org.pcov.pcovannouncements.DataClass;
 
+/**
+ * The image card is a data model for a single image item.
+ * Includes data such as uri, dateModified, orientation, dateTaken, Tag, etc.
+ */
 public class ImageCard {
-    private int mImageId;
-    private String mImageText;
 
-    public ImageCard(int imageId, String imageText) {
-        this.mImageId = imageId;
-        this.mImageText = imageText;
+    private String tag;
+    private String imageUrl;
+
+    public ImageCard() {
+        //empty constructor needed
     }
 
-    public int getmImageId() {
-        return mImageId;
+    public ImageCard(String name, String imageUrl) {
+        if (name.trim().equals("")) {
+            name = "No Name";
+        }
+
+        tag = name;
+        this.imageUrl = imageUrl;
     }
 
-    public String getmImageText() {
-        return mImageText;
+    public String getTag() {
+        return tag;
     }
 
-    public String toString() {
-        return "Image Card{" +
-                "imageId='" + mImageId + '\'' +
-                ", text='" + mImageText + '\'' +
-                '}';
+    public void setName(String name) {
+        tag = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
