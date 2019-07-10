@@ -33,6 +33,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:19.0.0'
     implementation 'com.google.firebase:firebase-storage:17.0.0'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -41,8 +43,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.apis:google-api-services-youtube:v3-rev209-1.25.0'
     implementation 'com.google.api-client:google-api-client-android:1.25.0'
-
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
 }
+
 apply plugin: 'com.google.gms.google-services'

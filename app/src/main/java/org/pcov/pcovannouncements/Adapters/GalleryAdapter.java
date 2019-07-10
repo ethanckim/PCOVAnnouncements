@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.pcov.pcovannouncements.DataClass.ImageCard;
 import org.pcov.pcovannouncements.R;
 
@@ -20,12 +22,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private static final String TAG = "GalleryAdapter";
     private static final int NUM_GRID_COLUMNS = 3;
 
-    private Context context;
-    List<ImageCard> images;
+    private Context mContext;
+    private List<ImageCard> images;
     private GalleryAdapter.OnCardClickListener mListener;
 
     public GalleryAdapter(Context mContext, ArrayList<ImageCard> list) {
-        this.context = mContext;
+        this.mContext = mContext;
         this.images = list;
     }
 
@@ -41,10 +43,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, final int position) {
-        ImageCard currentCard;
-        currentCard = images.get(position);
-        viewHolder.mTextView.setText(currentCard.getmImageText());
-        viewHolder.mImageView.setImageResource(currentCard.getmImageId());
+        ImageCard uploadCurrent = images.get(position);
+        Picasso.with(mContext)
+                .load(uploadCurrent.getImageUrl())
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
+                .into(viewHolder.mImageView);
+        viewHolder.mTextView.setText(" " + uploadCurrent.getTag() + " ");
     }
 
     @Override
@@ -52,23 +58,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         return images.size();
     }
 
-    public interface OnCardClickListener {
-        //Use this method to send the position of the clicked card for the fragment.
-        void onCardClick(int position);
-    }
 
-    public void setOnClickListener(GalleryAdapter.OnCardClickListener listener) {
-        mListener = listener;
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder     {
         public ImageView mImageView;
         public TextView mTextView;
 
         public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.galleryImageView);
-            mTextView = itemView.findViewById(R.id.galleryTextView);
+            mTextView = itemView.findViewById(R.id.galleryImageTag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,6 +80,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 }
             });
         }
+    }
+
+
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
+    }
+
+    public void setOnClickListener(GalleryAdapter.OnCardClickListener listener) {
+        mListener = listener;
     }
 
 }

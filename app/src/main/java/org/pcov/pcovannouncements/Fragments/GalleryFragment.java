@@ -17,67 +17,66 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import org.pcov.pcovannouncements.Adapters.GalleryAdapter;
-import org.pcov.pcovannouncements.Adapters.NewsCardAdapter;
-import org.pcov.pcovannouncements.AnnouncementsTextActivity;
 import org.pcov.pcovannouncements.DataClass.ImageCard;
 import org.pcov.pcovannouncements.DataClass.NewsCard;
 import org.pcov.pcovannouncements.GalleryExtendActivity;
 import org.pcov.pcovannouncements.R;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private View v;
-    private ArrayList<ImageCard> mGalleryList;
     private GalleryAdapter madapter;
-    private StorageReference mStorageRef;
-    private Context context;
-    private Activity activity;
+
+    private FirebaseStorage mStorage;
+    private FirebaseFirestore mDatabase;
+
+    private ArrayList<ImageCard> mGalleryList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance();
+        mDatabase = FirebaseFirestore.getInstance();
         mGalleryList = new ArrayList<>();
-        context = getContext();
-        activity = getActivity();
 
-        getListItems();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        v = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View v = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.galleryRecyclerView);
         recyclerView.setHasFixedSize(true);
 
-        madapter = new GalleryAdapter(context, mGalleryList);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
+        madapter = new GalleryAdapter(this.getContext(), mGalleryList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         recyclerView.setAdapter(madapter);
+
+        //Get all the image references from the firestore.
+        getListItems();
 
         madapter.setOnClickListener(new GalleryAdapter.OnCardClickListener() {
             @Override
             public void onCardClick (int position) {
                 //Navigate to the new activity, based off the card (Use position to distinguish cards)
                 Intent i;
-                i = new Intent(activity, GalleryExtendActivity.class);
-                i.putExtra("imageID", mGalleryList.get(position).getmImageId());
-                i.putExtra("imageText", mGalleryList.get(position).getmImageText());
+                i = new Intent(getActivity(), GalleryExtendActivity.class);
+                i.putExtra("imageUrl", mGalleryList.get(position).getImageUrl());
+                i.putExtra("imageTag", mGalleryList.get(position).getTag());
                 startActivity(i);
             }
         });
@@ -85,48 +84,31 @@ public class GalleryFragment extends Fragment {
         return v;
     }
 
-
-
-    public void getListItems() {
-//        File localFile = null;
-//        try {
-//            localFile = File.createTempFile("images", "jpg");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        mStorageRef.getFile(localFile)
-//                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                        List<ImageCard> imageCards = new ImageCard(, "Sss");
-//                        Glide.with(getContext())
-//                                .load(completeStorageRefranceToImage)
-//                                .into(imageView);
-//                        // Add all to your list
-//                        mGalleryList.addAll(imageCards);
-//                        Log.d("Firebase", "onSuccess: " + mGalleryList.toString());
-//                        recyclerView.getAdapter().notifyDataSetChanged();
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                Toast.makeText(getActivity().getApplicationContext(), "Error Downloading Data", Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
-//
-//
-        mGalleryList.add(new ImageCard(R.drawable.one, "Testing"));
-        mGalleryList.add(new ImageCard(R.drawable.two, ""));
-        mGalleryList.add(new ImageCard(R.drawable.three, ""));
-        mGalleryList.add(new ImageCard(R.drawable.four, ""));
-        mGalleryList.add(new ImageCard(R.drawable.five, ""));
-        mGalleryList.add(new ImageCard(R.drawable.six, ""));
-        mGalleryList.add(new ImageCard(R.drawable.seven, ""));
-        mGalleryList.add(new ImageCard(R.drawable.eight, ""));
-        mGalleryList.add(new ImageCard(R.drawable.nine, ""));
-        mGalleryList.add(new ImageCard(R.drawable.ten, ""));
-
+    private void getListItems() {
+        mDatabase.collection("Images")
+                .orderBy("position", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        if (documentSnapshots.isEmpty()) {
+                            Log.d("Firebase", "onSuccess: LIST EMPTY");
+                            return;
+                        } else {
+                            // Convert the whole Query Snapshot to a list
+                            // of objects directly! No need to fetch each
+                            // document.
+                            List<ImageCard> imageCards  = documentSnapshots.toObjects(ImageCard.class);
+                            // Add all to your list
+                            mGalleryList.addAll(imageCards);
+                            madapter.notifyDataSetChanged();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity().getApplicationContext(), "Error getting data!!!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

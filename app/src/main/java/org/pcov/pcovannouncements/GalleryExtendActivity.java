@@ -2,6 +2,7 @@ package org.pcov.pcovannouncements;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -15,12 +16,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,31 +42,34 @@ public class GalleryExtendActivity extends AppCompatActivity {
 
     private static final String IMAGE_SHARE_HASHTAG = " #PCOVApp";
 
-    ImageView mImageView;
-    TextView mTextView;
+    private ImageView mImageView;
+    private TextView mTextView;
+    private ScaleGestureDetector mScaleGestureDetector;
+    private float mScaleFactor = 1.0f;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent mIntent = getIntent();
         int imageID;
 
         mImageView = (ImageView) findViewById(R.id.galleryImageView);
-        mTextView = (TextView) findViewById(R.id.galleryTextView);
+        mTextView = (TextView) findViewById(R.id.galleryImageTag);
 
-        if (mIntent.hasExtra("imageID")) {
-            imageID = mIntent.getIntExtra("imageID", 0);
-            mImageView.setImageResource(imageID);
-        }
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+        String imageTag = getIntent().getStringExtra("imageTag");
 
-        if (mIntent.hasExtra("imageText")) {
-            String imageText = getIntent().getStringExtra("imageText");
-            mTextView.setText(imageText);
-        }
+        Picasso.with(this.getApplicationContext())
+                .load(imageUrl)
+                .into(mImageView);
 
-        mTextView.setMovementMethod(new ScrollingMovementMethod());
+        mTextView.setText(imageTag);
+
+        //For pinch & zoom
+        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
     }
 
@@ -151,6 +164,29 @@ public class GalleryExtendActivity extends AppCompatActivity {
         intent.setData(Uri.fromFile(outFile));
 
         return intent;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        mScaleGestureDetector.onTouchEvent(event);
+        return true;
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+            mScaleFactor *= scaleGestureDetector.getScaleFactor();
+            mScaleFactor = Math.max(0.1f,Math.min(mScaleFactor, 10.0f));
+            Log.d("pinch", "x: " + mImageView.getScaleX() + "y: " + mImageView.getScaleY());
+            if (mScaleFactor >= 1) {
+                mImageView.setScaleX(mScaleFactor);
+                mImageView.setScaleY(mScaleFactor);
+            }else {
+                mScaleFactor = 1;
+            }
+            return true;
+        }
+
     }
 
 }

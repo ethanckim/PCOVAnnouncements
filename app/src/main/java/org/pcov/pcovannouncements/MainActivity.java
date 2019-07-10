@@ -78,10 +78,7 @@ public class MainActivity extends AppCompatActivity
             ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
         }
 
-        if (permissionWriteExternal == PackageManager.PERMISSION_GRANTED && permissionReadExternal == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getBaseContext(), "Image Download and Share will Work",
-                    Toast.LENGTH_SHORT).show();
-        } else {
+        if (permissionWriteExternal != PackageManager.PERMISSION_GRANTED || permissionReadExternal != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getBaseContext(), "Image Download and Share WILL NOT Work",
                     Toast.LENGTH_LONG).show();
         }
