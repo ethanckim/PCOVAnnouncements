@@ -40,17 +40,24 @@ public class GalleryExtendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent mIntent = getIntent();
+        int imageID;
 
         mImageView = (ImageView) findViewById(R.id.galleryImageView);
         mTextView = (TextView) findViewById(R.id.galleryTextView);
 
-        int imageID = getIntent().getIntExtra("imageID", 0);
-        String imageText = getIntent().getStringExtra("imageText");
+        if (mIntent.hasExtra("imageID")) {
+            imageID = mIntent.getIntExtra("imageID", 0);
+            mImageView.setImageResource(imageID);
+        }
 
-        mTextView.setText(imageText);
+        if (mIntent.hasExtra("imageText")) {
+            String imageText = getIntent().getStringExtra("imageText");
+            mTextView.setText(imageText);
+        }
+
         mTextView.setMovementMethod(new ScrollingMovementMethod());
 
-        mImageView.setImageResource(imageID);
     }
 
     @Override
@@ -72,13 +79,18 @@ public class GalleryExtendActivity extends AppCompatActivity {
                 return true;
             case R.id.action_share:
                 Intent shareIntent = createShareImageIntent();
-                startActivity(shareIntent);
-                return true;
+
+                if (shareIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(shareIntent);
+                    return true;
+                }
+
+                Toast.makeText(getBaseContext(), "Error Sharing", Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
             case R.id.action_download:
                 Intent downloadIntent = downloadImage();
                 sendBroadcast(downloadIntent);
-                Toast.makeText(getBaseContext(), "Image Downloaded",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Image Downloaded", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
