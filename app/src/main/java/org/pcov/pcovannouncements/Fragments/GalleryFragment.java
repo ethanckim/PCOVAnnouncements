@@ -1,5 +1,7 @@
 package org.pcov.pcovannouncements.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,14 +42,17 @@ public class GalleryFragment extends Fragment {
     private ArrayList<ImageCard> mGalleryList;
     private GalleryAdapter madapter;
     private StorageReference mStorageRef;
+    private Context context;
+    private Activity activity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mGalleryList = new ArrayList<>();
+        context = getContext();
+        activity = getActivity();
 
         getListItems();
     }
@@ -55,13 +60,14 @@ public class GalleryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         v = inflater.inflate(R.layout.fragment_gallery, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.galleryRecyclerView);
         recyclerView.setHasFixedSize(true);
 
-        madapter = new GalleryAdapter(getContext(), mGalleryList);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        madapter = new GalleryAdapter(context, mGalleryList);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
         recyclerView.setAdapter(madapter);
 
         madapter.setOnClickListener(new GalleryAdapter.OnCardClickListener() {
@@ -69,7 +75,7 @@ public class GalleryFragment extends Fragment {
             public void onCardClick (int position) {
                 //Navigate to the new activity, based off the card (Use position to distinguish cards)
                 Intent i;
-                i = new Intent(getActivity(), GalleryExtendActivity.class);
+                i = new Intent(activity, GalleryExtendActivity.class);
                 i.putExtra("imageID", mGalleryList.get(position).getmImageId());
                 i.putExtra("imageText", mGalleryList.get(position).getmImageText());
                 startActivity(i);

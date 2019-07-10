@@ -20,19 +20,20 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private static final String TAG = "GalleryAdapter";
     private static final int NUM_GRID_COLUMNS = 3;
 
-    private Context mContext;
+    private Context context;
     List<ImageCard> images;
     private GalleryAdapter.OnCardClickListener mListener;
 
     public GalleryAdapter(Context mContext, ArrayList<ImageCard> list) {
-        this.mContext = mContext;
+        this.context = mContext;
         this.images = list;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
         GalleryAdapter.MyViewHolder viewHolder = new GalleryAdapter.MyViewHolder(view, mListener);
         return viewHolder;
 
@@ -40,7 +41,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, final int position) {
-        ImageCard currentCard = images.get(position);
+        ImageCard currentCard;
+        currentCard = images.get(position);
         viewHolder.mTextView.setText(currentCard.getmImageText());
         viewHolder.mImageView.setImageResource(currentCard.getmImageId());
     }
