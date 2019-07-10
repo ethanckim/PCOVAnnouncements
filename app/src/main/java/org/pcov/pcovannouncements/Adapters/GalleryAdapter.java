@@ -27,7 +27,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     private GalleryAdapter.OnCardClickListener mListener;
 
     public GalleryAdapter(Context mContext, ArrayList<ImageCard> list) {
-        this.context = mContext;
+        this.mContext = mContext;
         this.images = list;
     }
 

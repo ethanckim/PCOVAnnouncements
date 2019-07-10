@@ -51,8 +51,6 @@ public class GalleryFragment extends Fragment {
         mStorage = FirebaseStorage.getInstance();
         mDatabase = FirebaseFirestore.getInstance();
         mGalleryList = new ArrayList<>();
-        context = getContext();
-        activity = getActivity();
 
     }
 
