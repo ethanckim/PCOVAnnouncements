@@ -18,11 +18,22 @@
     <string name="worship_services">예배 및 성경공부 안내</string>
     <string name="church_history">연혁</string>
     <string name="visit_us">연락과 찾아오시는 길</string>
+    <string name="who_made_this_app">어플리케이션 제작진</string>
 
     <string name="churchphoto">교회 사진</string>
 
     <string name="title_activity_video_viewer">비디오 뷰어</string>
 
     <string name="firebase_notification_description">알림</string>
+
+    <string name="galleryNotificationTitle">다운로드 완료</string>
+    <string name="galleryNotificationContext">사진을 성공적으로 디바이스에 저장했습니다.</string>
+    <string name="errorWhileBringingImage">사진을 불러오지 못했습니다.</string>
+
+    <!-- Credits Strings -->
+    <string name="credits">어플리케이션 제작진</string>
+    <string name="ethan_kim">김에단</string>
+    <string name="rex_liu">Rex Liu</string>
+    <string name="kin_lo">Kin Lo</string>
 
 </resources>
