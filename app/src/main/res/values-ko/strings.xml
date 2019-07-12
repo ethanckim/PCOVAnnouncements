@@ -23,6 +23,7 @@
     <string name="churchphoto">교회 사진</string>
 
     <string name="title_activity_video_viewer">비디오 뷰어</string>
+    <string name="title_activity_credits">제작진</string>
 
     <string name="firebase_notification_description">알림</string>
 

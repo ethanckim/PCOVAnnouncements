@@ -23,12 +23,15 @@
     <string name="churchphoto">churchPhoto</string>
 
     <string name="title_activity_video_viewer">VideoViewer</string>
+    <string name="title_activity_credits">Credits</string>
 
     <string name="firebase_notification_description">Notifications description (Change later)</string>
 
     <string name="galleryNotificationTitle">Download Complete</string>
     <string name="galleryNotificationContext">The image has been downloaded to your device!</string>
     <string name="errorWhileBringingImage">There was an error while bringing the image</string>
+
+    <!-- Credits Strings -->
     <string name="credits">Credits</string>
     <string name="ethan_kim">Ethan Kim</string>
     <string name="rex_liu">Rex Liu</string>
