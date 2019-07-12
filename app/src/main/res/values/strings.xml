@@ -32,7 +32,7 @@
     <string name="errorWhileBringingImage">There was an error while bringing the image</string>
 
     <!-- Credits Strings -->
-    <string name="credits">Credits</string>
+    <string name="credits">The Philadelphia Church of Vancouver Application</string>
     <string name="ethan_kim">Ethan Kim</string>
     <string name="rex_liu">Rex Liu</string>
     <string name="kin_lo">Kin Lo</string>

@@ -32,7 +32,7 @@
     <string name="errorWhileBringingImage">사진을 불러오지 못했습니다.</string>
 
     <!-- Credits Strings -->
-    <string name="credits">어플리케이션 제작진</string>
+    <string name="credits">빌라델비아 교회</string>
     <string name="ethan_kim">김에단</string>
     <string name="rex_liu">Rex Liu</string>
     <string name="kin_lo">Kin Lo</string>
