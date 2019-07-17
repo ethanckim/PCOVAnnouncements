@@ -3,6 +3,7 @@ package org.pcov.pcovannouncements.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,8 +64,16 @@ public class GalleryFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         madapter = new GalleryAdapter(this.getContext(), mGalleryList);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
+
         recyclerView.setAdapter(madapter);
+
 
         //Get all the image references from the firestore.
         getListItems();
