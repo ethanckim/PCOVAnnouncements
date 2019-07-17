@@ -1,5 +1,6 @@
 package org.pcov.pcovannouncements;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,14 +17,18 @@ public class Credits extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credits);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_credits));
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // this takes the user 'back', as if they pressed the back button on the main android toolbar.
                 super.onBackPressed();
                 return true;
             default:
