@@ -14,12 +14,14 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.pcov.pcovannouncements.Fragments.AnnouncementFragment;
+
 import java.util.Map;
 import java.util.Random;
 
 public class FirebaseNotifications extends FirebaseMessagingService {
     private static final String TAG = "Firebase Notifications";
-    private static final String NOTIFICATION_CHANNEL_ID  = "org.pcov.notifications";
+    public static final String NOTIFICATION_CHANNEL_ID  = "org.pcov.notifications";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -57,7 +59,7 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         }
 
         // Create an Intent for the activity you want to start
-        Intent resultIntent = new Intent(this, MainActivity.class);
+        Intent resultIntent = new Intent(this, AnnouncementFragment.class);
         // Create the TaskStackBuilder and add the intent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(resultIntent);

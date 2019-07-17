@@ -1,5 +1,7 @@
 package org.pcov.pcovannouncements;
 
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +15,8 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -32,11 +36,13 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 public class GalleryExtendActivity extends AppCompatActivity {
 
@@ -104,6 +110,26 @@ public class GalleryExtendActivity extends AppCompatActivity {
                 Intent downloadIntent = downloadImage();
                 sendBroadcast(downloadIntent);
                 Toast.makeText(getBaseContext(), "Image Downloaded", Toast.LENGTH_SHORT).show();
+
+                //Notification
+                File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PCOV");
+                Uri imageUri = Uri.parse(dir.toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW, imageUri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setType("image/*");
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, FirebaseNotifications.NOTIFICATION_CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(getText(R.string.galleryNotificationTitle))
+                        .setContentText(getText(R.string.galleryNotificationContext))
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                notificationManager.notify(new Random().nextInt(), builder.build());
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -187,6 +213,13 @@ public class GalleryExtendActivity extends AppCompatActivity {
             return true;
         }
 
+    }
+
+    public Uri getImageUri(Context context, Bitmap bitmapImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmapImage, "Title", null);
+        return Uri.parse(path);
     }
 
 }

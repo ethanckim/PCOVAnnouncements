@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.pcov.pcovannouncements.DataClass.ImageCard;
@@ -46,15 +48,26 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, final int position) {
-        ImageCard uploadCurrent = images.get(position);
+    public void onBindViewHolder(@NonNull final MyViewHolder viewHolder, final int position) {
+        final ImageCard uploadCurrent = images.get(position);
+        final String errorText = mContext.getText(R.string.errorWhileBringingImage).toString();
         Picasso.with(mContext)
                 .load(uploadCurrent.getImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.color.colorWhite)
                 .fit()
                 .centerCrop()
-                .into(viewHolder.mImageView);
-        viewHolder.mTextView.setText(" " + uploadCurrent.getTag() + " ");
+                .into(viewHolder.mImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        viewHolder.mProgressBar.setVisibility(View.GONE);
+                        viewHolder.mTextView.setText(" " + uploadCurrent.getTag() + " ");
+                    }
+
+                    @Override
+                    public void onError() {
+                        viewHolder.mTextView.setText(" " + errorText + " ");
+                    }
+                });
     }
 
     @Override
@@ -64,6 +77,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder     {
+        private ProgressBar mProgressBar;
         public ImageView mImageView;
         public TextView mTextView;
 
@@ -71,6 +85,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             super(itemView);
             mImageView = itemView.findViewById(R.id.galleryImageView);
             mTextView = itemView.findViewById(R.id.galleryImageTag);
+            mProgressBar = itemView.findViewById(R.id.imageprogress);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

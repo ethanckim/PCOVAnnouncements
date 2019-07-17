@@ -18,11 +18,21 @@
     <string name="worship_services">예배 및 성경공부 안내</string>
     <string name="church_history">연혁</string>
     <string name="visit_us">연락과 찾아오시는 길</string>
+    <string name="who_made_this_app">어플리케이션 제작진</string>
 
     <string name="churchphoto">교회 사진</string>
 
     <string name="title_activity_video_viewer">비디오 뷰어</string>
+    <string name="title_activity_credits">제작진</string>
 
     <string name="firebase_notification_description">알림</string>
+
+    <string name="galleryNotificationTitle">다운로드 완료</string>
+    <string name="galleryNotificationContext">사진을 성공적으로 디바이스에 저장했습니다.</string>
+    <string name="errorWhileBringingImage">사진을 불러오지 못했습니다.</string>
+
+    <!-- Credits Strings -->
+    <string name="credits">빌라델비아 교회</string>
+    <string name="all_credits">제작진 팀:\n\n김에단 Rex Liu\n\n\n교회를 섬기시는 분들:\n\n천성덕\n김성훈\n박희성\n김삼우\n계선화\n이도훈\n이성진\n\n\n특별 감사:\n\nKin Lo</string>
 
 </resources>
