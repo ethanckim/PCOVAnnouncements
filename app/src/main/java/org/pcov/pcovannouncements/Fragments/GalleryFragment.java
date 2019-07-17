@@ -67,7 +67,7 @@ public class GalleryFragment extends Fragment {
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         }
