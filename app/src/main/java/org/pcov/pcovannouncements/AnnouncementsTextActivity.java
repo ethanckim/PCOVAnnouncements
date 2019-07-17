@@ -7,13 +7,15 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class AnnouncementsTextActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcements_text);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         TextView txtContext = findViewById(R.id.txtContext);
 
         String context = getIntent().getStringExtra("newsCardContext");

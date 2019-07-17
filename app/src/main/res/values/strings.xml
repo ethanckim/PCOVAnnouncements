@@ -18,13 +18,22 @@
     <string name="worship_services">Worship Services</string>
     <string name="church_history">Church History</string>
     <string name="visit_us">Visit Us</string>
+    <string name="who_made_this_app">Who Made this App?</string>
 
     <string name="churchphoto">churchPhoto</string>
 
     <string name="title_activity_video_viewer">VideoViewer</string>
-    
+    <string name="title_activity_credits">Credits</string>
+
     <string name="firebase_notification_description">Notifications description (Change later)</string>
-    <string name="str_GalleryText">TextView</string>
+
+    <string name="galleryNotificationTitle">Download Complete</string>
+    <string name="galleryNotificationContext">The image has been downloaded to your device!</string>
+    <string name="errorWhileBringingImage">There was an error while bringing the image</string>
+
+    <!-- Credits Strings -->
+    <string name="credits">The Philadelphia Church of Vancouver Application</string>
+    <string name="all_credits">Development Team:\n\nEthan Kim\nRex Liu\n\n\nThose who serve the Ministry:\n\nSung Duck Chun\nSung Hoon Kim\nHeesung Park\nSam Kim\nSunhwa Gea\nTony Dohoon Lee\nSeong Jin Lee\n\n\nSpecial Thanks:\n\nKin Lo</string>
 
 
 </resources>

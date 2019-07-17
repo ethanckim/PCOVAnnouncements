@@ -7,16 +7,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class AboutUsWebviewActivity extends AppCompatActivity {
+import java.util.Objects;
 
-    private WebView webView;
+public class AboutUsWebviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aboutus_webview);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        webView = findViewById(R.id.about_us_webview);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        WebView webView = findViewById(R.id.about_us_webview);
         webView.setWebViewClient(new WebViewClient());
 
         //Configure webView settings to eliminate WIX Site Problem

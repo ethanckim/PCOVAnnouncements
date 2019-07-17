@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import org.pcov.pcovannouncements.AboutUsWebviewActivity;
 import org.pcov.pcovannouncements.Adapters.InfoCardAdapter;
+import org.pcov.pcovannouncements.Credits;
 import org.pcov.pcovannouncements.DataClass.InformationCard;
 import org.pcov.pcovannouncements.R;
 
@@ -35,6 +36,7 @@ public class InformationFragment extends Fragment {
         mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.worship_services)));
         mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.church_history)));
         mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.visit_us)));
+        mInformationList.add(new InformationCard(R.drawable.ic_arrow_forward, getString(R.string.who_made_this_app)));
     }
 
     @Nullable
@@ -55,9 +57,14 @@ public class InformationFragment extends Fragment {
             public void onCardClick(int position) {
                 //Navigate to the new activity, based off the card (Use position the distinguish cards)
                 Intent i;
-                i = new Intent(getActivity(), AboutUsWebviewActivity.class);
-                i.putExtra("position", position);
-                startActivity(i);
+                if (position == 5) {
+                    i = new Intent(getActivity(), Credits.class);
+                    startActivity(i);
+                } else {
+                    i = new Intent(getActivity(), AboutUsWebviewActivity.class);
+                    i.putExtra("position", position);
+                    startActivity(i);
+                }
 
             }
         });
