@@ -18,10 +18,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -33,6 +34,7 @@ import org.pcov.pcovannouncements.Fragments.InformationFragment;
 import org.pcov.pcovannouncements.Fragments.VideosFragment;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -75,11 +77,6 @@ public class MainActivity extends AppCompatActivity
             ActivityCompat.requestPermissions(this, PERMISSIONS, 1);
         }
 
-        if (permissionWriteExternal != PackageManager.PERMISSION_GRANTED || permissionReadExternal != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getBaseContext(), "Image Download and Share WILL NOT Work",
-                    Toast.LENGTH_LONG).show();
-        }
-
         if (currentFrag.equals(AnnouncementFragment.class)) {
             navigationView.setCheckedItem(R.id.nav_announcements);
         } else if (currentFrag.equals(InformationFragment.class)) {
@@ -96,6 +93,19 @@ public class MainActivity extends AppCompatActivity
         getFirebaseInstanceId();
         //For back-end FCM automatic sending
         FirebaseMessaging.getInstance().subscribeToTopic("Announcements");
+
+        db.collection("Other")
+                .document("churchVision")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                TextView visionText = findViewById(R.id.vision_text);
+                String language = Locale.getDefault().getISO3Language();
+                if (task.getResult() != null) {
+                    visionText.setText(task.getResult().getString(language));
+                }
+            }
+        });
     }
 
 

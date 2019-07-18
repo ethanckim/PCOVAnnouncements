@@ -1,8 +1,10 @@
 package org.pcov.pcovannouncements;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +18,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -96,12 +99,12 @@ public class GalleryExtendActivity extends AppCompatActivity {
                     return true;
                 }
 
-                Toast.makeText(getBaseContext(), "Error Sharing", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), this.getString(R.string.sharing_error_toast), Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
             case R.id.action_download:
                 Intent downloadIntent = downloadImage();
                 sendBroadcast(downloadIntent);
-                Toast.makeText(getBaseContext(), "Image Downloaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), this.getString(R.string.image_downloaded_toast), Toast.LENGTH_LONG).show();
 
                 //Notification
                 File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PCOV");
@@ -148,8 +151,8 @@ public class GalleryExtendActivity extends AppCompatActivity {
             out.flush();
             out.close();
         } catch (Exception e) {
-            Toast.makeText(getBaseContext(), "Error. Please Try Again",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), this.getString(R.string.error_toast),
+                    Toast.LENGTH_LONG).show();
         }
 
         Intent intent = new Intent(Intent.ACTION_SEND);

@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/credits_image" />
 
     <TextView
-        android:id="@+id/ethan_k"
+        android:id="@+id/all_credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -45,6 +45,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/credits_title" />
+        app:layout_constraintTop_toBottomOf="@+id/credits_title"
+        android:scrollbars = "vertical" />
 
 </android.support.constraint.ConstraintLayout>
