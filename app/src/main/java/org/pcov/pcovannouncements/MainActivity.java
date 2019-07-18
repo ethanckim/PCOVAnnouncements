@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -35,8 +34,6 @@ import org.pcov.pcovannouncements.Fragments.VideosFragment;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import io.opencensus.common.Function;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,7 +99,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     private void getFirebaseInstanceId() {
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
@@ -150,7 +146,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             nextFrag = new GalleryFragment();
             getSupportActionBar().setTitle(R.string.nav_select_gallery);
-        }else if (id == R.id.nav_info) {
+        } else if (id == R.id.nav_info) {
             nextFrag = new InformationFragment();
             getSupportActionBar().setTitle(R.string.nav_select_information);
         } else {

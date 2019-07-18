@@ -18,14 +18,40 @@ public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyView
     private ArrayList<InformationCard> mInfoCardList;
     private OnCardClickListener mListener;
 
-    //Use interface to detect click
-    public interface OnCardClickListener {
-        //Use this method to send the position of the clicked card for the fragment.
-        void onCardClick(int position);
+    public InfoCardAdapter(ArrayList<InformationCard> infoCardList) {
+        mInfoCardList = infoCardList;
     }
 
     public void setOnClickListener(OnCardClickListener listener) {
         mListener = listener;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_information, viewGroup, false);
+        MyViewHolder viewHolder = new MyViewHolder(v, mListener);
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
+        InformationCard currentCard = mInfoCardList.get(i);
+
+        viewHolder.mImageView.setImageResource(currentCard.getImageResource());
+        viewHolder.mTextView.setText(currentCard.getText());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mInfoCardList.size();
+    }
+
+    //Use interface to detect click
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -49,31 +75,5 @@ public class InfoCardAdapter extends RecyclerView.Adapter<InfoCardAdapter.MyView
                 }
             });
         }
-    }
-
-    public InfoCardAdapter(ArrayList<InformationCard> infoCardList) {
-        mInfoCardList = infoCardList;
-    }
-
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_information, viewGroup, false);
-        MyViewHolder viewHolder = new MyViewHolder(v, mListener);
-
-        return viewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        InformationCard currentCard = mInfoCardList.get(i);
-
-        viewHolder.mImageView.setImageResource(currentCard.getImageResource());
-        viewHolder.mTextView.setText(currentCard.getText());
-    }
-
-    @Override
-    public int getItemCount() {
-        return mInfoCardList.size();
     }
 }

@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class FirebaseNotifications extends FirebaseMessagingService {
+    public static final String NOTIFICATION_CHANNEL_ID = "org.pcov.notifications";
     private static final String TAG = "Firebase Notifications";
-    public static final String NOTIFICATION_CHANNEL_ID  = "org.pcov.notifications";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

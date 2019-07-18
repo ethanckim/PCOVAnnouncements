@@ -18,43 +18,12 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyView
     private ArrayList<NewsCard> mNewsCardList;
     private OnCardClickListener mListener;
 
-    //Use interface to detect click
-    public interface OnCardClickListener {
-        //Use this method to send the position of the clicked card for the fragment.
-        void onCardClick(int position);
+    public NewsCardAdapter(ArrayList<NewsCard> newsCardList) {
+        mNewsCardList = newsCardList;
     }
 
     public void setOnClickListener(OnCardClickListener listener) {
         mListener = listener;
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mDateTextView;
-        public TextView mContextPreviewView;
-
-        public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.newsCardImageView);
-            mDateTextView = itemView.findViewById(R.id.newsDateTextView);
-            mContextPreviewView = itemView.findViewById(R.id.newsPreviewContextTextView);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onCardClick(position);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    public NewsCardAdapter(ArrayList<NewsCard> newsCardList) {
-        mNewsCardList = newsCardList;
     }
 
     @NonNull
@@ -96,5 +65,36 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyView
     @Override
     public int getItemCount() {
         return mNewsCardList.size();
+    }
+
+    //Use interface to detect click
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mDateTextView;
+        public TextView mContextPreviewView;
+
+        public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.newsCardImageView);
+            mDateTextView = itemView.findViewById(R.id.newsDateTextView);
+            mContextPreviewView = itemView.findViewById(R.id.newsPreviewContextTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onCardClick(position);
+                        }
+                    }
+                }
+            });
+        }
     }
 }

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,28 +16,21 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -198,28 +190,28 @@ public class GalleryExtendActivity extends AppCompatActivity {
         return true;
     }
 
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            mScaleFactor *= scaleGestureDetector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f,Math.min(mScaleFactor, 10.0f));
-            Log.d("pinch", "x: " + mImageView.getScaleX() + "y: " + mImageView.getScaleY());
-            if (mScaleFactor >= 1) {
-                mImageView.setScaleX(mScaleFactor);
-                mImageView.setScaleY(mScaleFactor);
-            }else {
-                mScaleFactor = 1;
-            }
-            return true;
-        }
-
-    }
-
     public Uri getImageUri(Context context, Bitmap bitmapImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmapImage, "Title", null);
         return Uri.parse(path);
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
+            mScaleFactor *= scaleGestureDetector.getScaleFactor();
+            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
+            Log.d("pinch", "x: " + mImageView.getScaleX() + "y: " + mImageView.getScaleY());
+            if (mScaleFactor >= 1) {
+                mImageView.setScaleX(mScaleFactor);
+                mImageView.setScaleY(mScaleFactor);
+            } else {
+                mScaleFactor = 1;
+            }
+            return true;
+        }
+
     }
 
 }

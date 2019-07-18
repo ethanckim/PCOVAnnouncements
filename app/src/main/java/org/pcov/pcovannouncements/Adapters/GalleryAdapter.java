@@ -1,15 +1,11 @@
 package org.pcov.pcovannouncements.Adapters;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,7 +37,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false  );
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_images, parent, false);
         GalleryAdapter.MyViewHolder viewHolder = new GalleryAdapter.MyViewHolder(view, mListener);
         return viewHolder;
 
@@ -75,11 +71,20 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         return images.size();
     }
 
+    public void setOnClickListener(GalleryAdapter.OnCardClickListener listener) {
+        mListener = listener;
+    }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder     {
-        private ProgressBar mProgressBar;
+
+    public interface OnCardClickListener {
+        //Use this method to send the position of the clicked card for the fragment.
+        void onCardClick(int position);
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView;
+        private ProgressBar mProgressBar;
 
         public MyViewHolder(@NonNull View itemView, final OnCardClickListener listener) {
             super(itemView);
@@ -99,16 +104,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 }
             });
         }
-    }
-
-
-    public interface OnCardClickListener {
-        //Use this method to send the position of the clicked card for the fragment.
-        void onCardClick(int position);
-    }
-
-    public void setOnClickListener(GalleryAdapter.OnCardClickListener listener) {
-        mListener = listener;
     }
 
 }
