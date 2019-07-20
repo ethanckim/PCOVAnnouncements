@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -59,21 +61,26 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         }
 
         // Create an Intent for the activity you want to start
-        Intent resultIntent = new Intent(this, AnnouncementFragment.class);
-        // Create the TaskStackBuilder and add the intent, which inflates the back stack
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        resultIntent.putExtra("menuFragment", "announcementsFragment");
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
-        // Get the PendingIntent containing the entire back stack
+
+        // Create the TaskStackBuilder and add the intent, which inflates the back stack
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        notificationBuilder.setContentIntent(resultPendingIntent);
         notificationBuilder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(title)
                 .setContentText(body)
                 .setContentInfo("Notifications of New Videos and Announcements")
-                .setContentIntent(resultPendingIntent);
+                .setContentIntent(resultPendingIntent)
+                .setAutoCancel(true);
 
         notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
 

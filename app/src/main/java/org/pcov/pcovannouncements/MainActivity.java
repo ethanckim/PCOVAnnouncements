@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -63,9 +65,21 @@ public class MainActivity extends AppCompatActivity
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, currentFrag, currentFrag.getTag())
-                .commit();
+        //If main activity is opened with notification
+        String menuFragment = getIntent().getStringExtra("menuFragment");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // If menuFragment is defined, then this activity was launched with a fragment selection
+        if (menuFragment != null) {
+            if (menuFragment.equals("announcementsFragment")) {
+                AnnouncementFragment announcementFragment = new AnnouncementFragment();
+                fragmentTransaction.replace(R.id.fragmentContainer, announcementFragment).commit();
+            }
+        } else {
+            // Activity was not launched with a menuFragment selected -- continue as if this activity was opened from a launcher (for example)
+            fragmentTransaction.replace(R.id.fragmentContainer, currentFrag, currentFrag.getTag())
+                    .commit();
+        }
 
         String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 

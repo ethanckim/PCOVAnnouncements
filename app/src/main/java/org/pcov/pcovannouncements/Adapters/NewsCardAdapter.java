@@ -69,28 +69,29 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
         NewsCard currentCard = mNewsCardList.get(i);
+        if (currentCard != null) {
+            if (currentCard.getType().equals("other"))
+                viewHolder.mImageView.setImageResource(R.drawable.icons_newsfeed_50);
+            else if (currentCard.getType().equals("emergency"))
+                viewHolder.mImageView.setImageResource(R.drawable.icons_siren_50);
+            else if (currentCard.getType().equals("notification"))
+                viewHolder.mImageView.setImageResource(R.drawable.icons_rss_50);
+            else if (currentCard.getType().equals("announce"))
+                viewHolder.mImageView.setImageResource(R.drawable.icons_megaphone_50);
+            else
+                viewHolder.mImageView.setImageResource(R.drawable.icons_megaphone_50);
 
-        if (currentCard.getType().equals("other"))
-            viewHolder.mImageView.setImageResource(R.drawable.icons_newsfeed_50);
-        else if (currentCard.getType().equals("emergency"))
-            viewHolder.mImageView.setImageResource(R.drawable.icons_siren_50);
-        else if (currentCard.getType().equals("notification"))
-            viewHolder.mImageView.setImageResource(R.drawable.icons_rss_50);
-        else if (currentCard.getType().equals("announce"))
-            viewHolder.mImageView.setImageResource(R.drawable.icons_megaphone_50);
-        else
-            viewHolder.mImageView.setImageResource(R.drawable.icons_megaphone_50);
+            String context = currentCard.getContext();
+            context = context.replace("\\r", "   ");
+            context = context.replace("\\t", " ");
 
-        String context = currentCard.getContext();
-        context = context.replace("\\r", "   ");
-        context = context.replace("\\t", " ");
+            if (context.length() < 60)
+                viewHolder.mContextPreviewView.setText(context);
+            else
+                viewHolder.mContextPreviewView.setText(context.substring(0, 59) + " ...");
 
-        if (context.length() < 60)
-            viewHolder.mContextPreviewView.setText(context);
-        else
-            viewHolder.mContextPreviewView.setText(context.substring(0, 59) + " ...");
-
-        viewHolder.mDateTextView.setText(currentCard.getDate());
+            viewHolder.mDateTextView.setText(currentCard.getDate());
+        }
     }
 
     @Override
