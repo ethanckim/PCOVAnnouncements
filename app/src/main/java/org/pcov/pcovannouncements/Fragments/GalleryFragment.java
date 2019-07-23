@@ -1,7 +1,5 @@
 package org.pcov.pcovannouncements.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,19 +16,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import org.pcov.pcovannouncements.Adapters.GalleryAdapter;
 import org.pcov.pcovannouncements.DataClass.ImageCard;
-import org.pcov.pcovannouncements.DataClass.NewsCard;
 import org.pcov.pcovannouncements.GalleryExtendActivity;
 import org.pcov.pcovannouncements.R;
+import org.pcov.pcovannouncements.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +67,12 @@ public class GalleryFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         }
 
+        if (!Utils.isDeviceOnline(this.getActivity())) {
+            Toast noInternetToast = Toast.makeText(getActivity().getApplicationContext(), getString(R.string.no_connection_gallery), Toast.LENGTH_LONG);
+            noInternetToast.show();
+        }
+
         recyclerView.setAdapter(madapter);
-
-
         //Get all the image references from the firestore.
         getListItems();
 

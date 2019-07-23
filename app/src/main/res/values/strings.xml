@@ -34,6 +34,9 @@
     <!-- Credits Strings -->
     <string name="credits">The Philadelphia Church of Vancouver Application</string>
     <string name="all_credits">Development Team:\n\nEthan Kim\nRex Liu\n\n\nThose who serve the Ministry:\n\nSung Duck Chun\nSung Hoon Kim\nHeesung Park\nSam Kim\nSunhwa Gea\nTony Dohoon Lee\nSeong Jin Lee\n\n\nSpecial Thanks:\n\nKin Lo</string>
+    <string name="no_connection_video">Please connect to the internet to view Sermon Videos.</string>
+    <string name="no_connection_gallery">No internet connection. Will not sync for new Images.</string>
+    <string name="no_connection_announcements">No internet connection. Will not sync for new Announcements.</string>
 
 
 </resources>

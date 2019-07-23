@@ -1,10 +1,7 @@
 package org.pcov.pcovannouncements.Fragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -34,6 +32,7 @@ import org.pcov.pcovannouncements.PlaylistResponse;
 import org.pcov.pcovannouncements.R;
 import org.pcov.pcovannouncements.DataClass.SermonCard;
 import org.pcov.pcovannouncements.DataClass.VideoInfo;
+import org.pcov.pcovannouncements.Utils;
 import org.pcov.pcovannouncements.VideoViewer;
 
 import java.io.IOException;
@@ -68,6 +67,7 @@ public class VideosFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_videos, container, false);
 
         mRecyclerView = v.findViewById(R.id.videosRecyclerView);
+
         mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -105,6 +105,13 @@ public class VideosFragment extends Fragment {
             }
         });
 
+        TextView txtnoInternet = (TextView) v.findViewById(R.id.txt_no_connection);
+        if (Utils.isDeviceOnline(this.getActivity())) {
+            txtnoInternet.setVisibility(View.GONE);
+        } else {
+            txtnoInternet.setVisibility(View.VISIBLE);
+        }
+
         return v;
     }
 
@@ -118,8 +125,9 @@ public class VideosFragment extends Fragment {
     private void getResultsFromApiFirstTime() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
-        } else if (!isDeviceOnline()) {
-            Toast noInternetToast = Toast.makeText(getActivity().getApplicationContext(), "No network connection available", Toast.LENGTH_SHORT);
+        } else if (!Utils.isDeviceOnline(this.getActivity())) {
+            Toast noInternetToast = Toast.makeText(getActivity().getApplicationContext(),
+                    R.string.no_connection_video, Toast.LENGTH_LONG);
             noInternetToast.show();
         } else {
             final AsyncTask<?, ?, ?> currentTask = lastApiCall.get();
@@ -128,19 +136,6 @@ public class VideosFragment extends Fragment {
                 lastApiCall.set(new MakeRequestTask("").execute());
             }
         }
-    }
-
-
-    /**
-     * Checks whether the device currently has a network connection.
-     *
-     * @return true if the device has a network connection, false otherwise.
-     */
-    private boolean isDeviceOnline() {
-        ConnectivityManager connMgr =
-                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
     }
 
     /**
