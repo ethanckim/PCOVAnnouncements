@@ -1,7 +1,5 @@
 package org.pcov.pcovannouncements.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,17 +16,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import org.pcov.pcovannouncements.Adapters.GalleryAdapter;
 import org.pcov.pcovannouncements.DataClass.ImageCard;
-import org.pcov.pcovannouncements.DataClass.NewsCard;
 import org.pcov.pcovannouncements.GalleryExtendActivity;
 import org.pcov.pcovannouncements.R;
 
@@ -80,7 +74,7 @@ public class GalleryFragment extends Fragment {
 
         madapter.setOnClickListener(new GalleryAdapter.OnCardClickListener() {
             @Override
-            public void onCardClick (int position) {
+            public void onCardClick(int position) {
                 //Navigate to the new activity, based off the card (Use position to distinguish cards)
                 Intent i;
                 i = new Intent(getActivity(), GalleryExtendActivity.class);
@@ -107,7 +101,7 @@ public class GalleryFragment extends Fragment {
                             // Convert the whole Query Snapshot to a list
                             // of objects directly! No need to fetch each
                             // document.
-                            List<ImageCard> imageCards  = documentSnapshots.toObjects(ImageCard.class);
+                            List<ImageCard> imageCards = documentSnapshots.toObjects(ImageCard.class);
                             // Add all to your list
                             mGalleryList.addAll(imageCards);
                             madapter.notifyDataSetChanged();

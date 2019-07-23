@@ -33,6 +33,11 @@
 
     <!-- Credits Strings -->
     <string name="credits">빌라델비아 교회</string>
-    <string name="all_credits">제작진 팀:\n\n김에단 Rex Liu\n\n\n교회를 섬기시는 분들:\n\n천성덕\n김성훈\n박희성\n김삼우\n계선화\n이도훈\n이성진\n\n\n특별 감사:\n\nKin Lo</string>
+    <string name="all_credits">제작진 팀:\n\n김에단\nRex Liu\n\n\n교회를 섬기시는 분들:\n\n천성덕\n김성훈\n박희성\n김삼우\n계선화\n이도훈\n이성진\n\n\n특별 감사:\n\nKin Lo</string>
+
+    <string name="storage_permission_toast">저장공간 앱 권한을 허용해주세요.</string>
+    <string name="sharing_error_toast">공유중 문제가 발생했습니다.</string>
+    <string name="image_downloaded_toast">다운로드 완료</string>
+    <string name="error_toast">문제가 발생했습니다. 다시 시도해주세요.</string>
 
 </resources>

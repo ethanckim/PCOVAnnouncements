@@ -33,7 +33,11 @@
 
     <!-- Credits Strings -->
     <string name="credits">The Philadelphia Church of Vancouver Application</string>
-    <string name="all_credits">Development Team:\n\nEthan Kim\nRex Liu\n\n\nThose who serve the Ministry:\n\nSung Duck Chun\nSung Hoon Kim\nHeesung Park\nSam Kim\nSunhwa Gea\nTony Dohoon Lee\nSeong Jin Lee\n\n\nSpecial Thanks:\n\nKin Lo</string>
+    <string name="all_credits">Development Team:\n\nEthan Kim\nRex Liu\n\n\nThose who serve the ministry:\n\nSung Duck Chun\nSung Hoon Kim\nHeesung Park\nSam Kim\nSunhwa Gea\nTony Dohoon Lee\nSeong Jin Lee\n\n\nSpecial Thanks To:\n\nKin Lo</string>
+    <string name="storage_permission_toast">Please allow app permissions for Storage</string>
+    <string name="sharing_error_toast">Error while Sharing</string>
+    <string name="image_downloaded_toast">Image Downloaded</string>
+    <string name="error_toast">Error. Please Try Again</string>
 
 
 </resources>

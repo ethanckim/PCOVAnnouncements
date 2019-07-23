@@ -1,8 +1,6 @@
 package org.pcov.pcovannouncements.Fragments;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,25 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.pcov.pcovannouncements.AboutUsWebviewActivity;
-import org.pcov.pcovannouncements.Adapters.InfoCardAdapter;
 import org.pcov.pcovannouncements.Adapters.NewsCardAdapter;
 import org.pcov.pcovannouncements.AnnouncementsTextActivity;
-import org.pcov.pcovannouncements.DataClass.InformationCard;
 import org.pcov.pcovannouncements.DataClass.NewsCard;
-import org.pcov.pcovannouncements.MainActivity;
 import org.pcov.pcovannouncements.R;
 
 import java.util.ArrayList;
