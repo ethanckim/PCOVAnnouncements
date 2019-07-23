@@ -1,8 +1,10 @@
 package org.pcov.pcovannouncements;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +18,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -117,28 +120,31 @@ public class GalleryExtendActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), this.getString(R.string.sharing_error_toast), Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
             case R.id.action_download:
+                @Nullable
                 Intent downloadIntent = downloadImage();
-                sendBroadcast(downloadIntent);
-                Toast.makeText(getBaseContext(), this.getString(R.string.image_downloaded_toast), Toast.LENGTH_LONG).show();
+                if (downloadIntent != null) {
+                    sendBroadcast(downloadIntent);
+                    Toast.makeText(getBaseContext(), this.getString(R.string.image_downloaded_toast), Toast.LENGTH_LONG).show();
 
-                //Notification
-                File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PCOV");
-                Uri imageUri = Uri.parse(dir.toString());
-                Intent intent = new Intent(Intent.ACTION_VIEW, imageUri);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setType("image/*");
-                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+                    //Notification
+                    File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PCOV");
+                    Uri imageUri = Uri.parse(dir.toString());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, imageUri);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setType("image/*");
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, FirebaseNotifications.NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(getText(R.string.galleryNotificationTitle))
-                        .setContentText(getText(R.string.galleryNotificationContext))
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, FirebaseNotifications.NOTIFICATION_CHANNEL_ID)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(getText(R.string.galleryNotificationTitle))
+                            .setContentText(getText(R.string.galleryNotificationContext))
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                notificationManager.notify(new Random().nextInt(), builder.build());
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                    notificationManager.notify(new Random().nextInt(), builder.build());
+                }
 
                 return true;
             default:
@@ -178,6 +184,25 @@ public class GalleryExtendActivity extends AppCompatActivity {
 
 
     private Intent downloadImage() {
+        //Check if storage permission is on, and request permissions
+        final String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.storage_permission_dialog_message)
+                    .setTitle(R.string.storage_permission_dialog_title);
+            builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ActivityCompat.requestPermissions(GalleryExtendActivity.this, PERMISSIONS, 2);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
         BitmapDrawable draw = (BitmapDrawable) mImageView.getDrawable();
         Bitmap bitmap = draw.getBitmap();
 

@@ -44,5 +44,9 @@
     <string name="image_downloaded_toast">Image Downloaded</string>
     <string name="error_toast">Error. Please Try Again</string>
 
+    <string name="storage_permission_dialog_message">To download images, you need to allow this app to access the device\'s storage. Press \"allow\" in the permission request.</string>
+    <string name="storage_permission_dialog_title">Need Storage Permissions</string>
+    <string name="okay">Okay</string>
+
 
 </resources>

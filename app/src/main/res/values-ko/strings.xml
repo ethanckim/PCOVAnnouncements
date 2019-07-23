@@ -43,5 +43,8 @@
     <string name="sharing_error_toast">공유중 문제가 발생했습니다.</string>
     <string name="image_downloaded_toast">다운로드 완료</string>
     <string name="error_toast">문제가 발생했습니다. 다시 시도해주세요.</string>
+    <string name="storage_permission_dialog_message">To download images, you need to allow this app to access the device\'s storage. Press \"allow\" in the following request.</string>
+    <string name="storage_permission_dialog_title">Need Storage Permissions</string>
+    <string name="okay">Okay</string>
 
 </resources>
