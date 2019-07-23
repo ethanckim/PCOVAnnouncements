@@ -30,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -60,12 +62,25 @@ public class GalleryExtendActivity extends AppCompatActivity {
         mImageView = (ImageView) findViewById(R.id.galleryImageView);
         mTextView = (TextView) findViewById(R.id.galleryImageTag);
 
-        String imageUrl = getIntent().getStringExtra("imageUrl");
-        String imageTag = getIntent().getStringExtra("imageTag");
+        final String imageUrl = getIntent().getStringExtra("imageUrl");
+        final String imageTag = getIntent().getStringExtra("imageTag");
 
         Picasso.with(this.getApplicationContext())
                 .load(imageUrl)
-                .into(mImageView);
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(mImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError() {
+                        //Use internet.
+                        Picasso.with(GalleryExtendActivity.this.getApplicationContext())
+                                .load(imageUrl)
+                                .into(mImageView);
+                    }
+                });
 
         mTextView.setText(imageTag);
 

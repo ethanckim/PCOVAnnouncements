@@ -1,6 +1,8 @@
 package org.pcov.pcovannouncements.Adapters;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.pcov.pcovannouncements.DataClass.ImageCard;
@@ -49,19 +52,39 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         final String errorText = mContext.getText(R.string.errorWhileBringingImage).toString();
         Picasso.with(mContext)
                 .load(uploadCurrent.getImageUrl())
-                .placeholder(R.color.colorWhite)
+                .networkPolicy(NetworkPolicy.OFFLINE)
                 .fit()
                 .centerCrop()
                 .into(viewHolder.mImageView, new Callback() {
                     @Override
                     public void onSuccess() {
+                        //Successfully loaded images offline with cache
                         viewHolder.mProgressBar.setVisibility(View.GONE);
                         viewHolder.mTextView.setText(" " + uploadCurrent.getTag() + " ");
                     }
 
                     @Override
                     public void onError() {
-                        viewHolder.mTextView.setText(" " + errorText + " ");
+                        // Try again online if cache failed
+                        Picasso.with(mContext)
+                                .load(uploadCurrent.getImageUrl())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .fit()
+                                .centerCrop()
+                                .into(viewHolder.mImageView, new Callback() {
+
+                                    @Override
+                                    public void onSuccess() {
+                                        viewHolder.mProgressBar.setVisibility(View.GONE);
+                                        viewHolder.mTextView.setText(" " + uploadCurrent.getTag() + " ");
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        viewHolder.mProgressBar.setVisibility(View.GONE);
+                                        viewHolder.mTextView.setText(" " + errorText + " ");
+                                    }
+                                });
                     }
                 });
     }

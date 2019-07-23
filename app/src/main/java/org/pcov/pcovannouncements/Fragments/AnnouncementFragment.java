@@ -23,6 +23,7 @@ import org.pcov.pcovannouncements.Adapters.NewsCardAdapter;
 import org.pcov.pcovannouncements.AnnouncementsTextActivity;
 import org.pcov.pcovannouncements.DataClass.NewsCard;
 import org.pcov.pcovannouncements.R;
+import org.pcov.pcovannouncements.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,11 @@ public class AnnouncementFragment extends Fragment {
 
             }
         });
+
+        if (!Utils.isDeviceOnline(this.getActivity())) {
+            Toast noInternetToast = Toast.makeText(getActivity().getApplicationContext(), getString(R.string.no_connection_announcements), Toast.LENGTH_LONG);
+            noInternetToast.show();
+        }
 
         return v;
     }
