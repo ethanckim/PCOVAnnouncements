@@ -34,7 +34,7 @@ public class VideoViewer extends YouTubeBaseActivity {
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.w("WARNING","Failed to initialize the youtube video player");
+                Log.w("WARNING", "Failed to initialize the youtube video player");
             }
 
         };

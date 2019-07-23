@@ -2,12 +2,11 @@ package org.pcov.pcovannouncements;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 
 import java.util.Objects;
 
@@ -22,6 +21,8 @@ public class Credits extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.title_activity_credits));
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        TextView credits = findViewById(R.id.all_credits);
+        credits.setMovementMethod(new ScrollingMovementMethod());
 
     }
 

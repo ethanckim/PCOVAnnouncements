@@ -78,7 +78,7 @@ public class GalleryFragment extends Fragment {
 
         madapter.setOnClickListener(new GalleryAdapter.OnCardClickListener() {
             @Override
-            public void onCardClick (int position) {
+            public void onCardClick(int position) {
                 //Navigate to the new activity, based off the card (Use position to distinguish cards)
                 Intent i;
                 i = new Intent(getActivity(), GalleryExtendActivity.class);
@@ -105,7 +105,7 @@ public class GalleryFragment extends Fragment {
                             // Convert the whole Query Snapshot to a list
                             // of objects directly! No need to fetch each
                             // document.
-                            List<ImageCard> imageCards  = documentSnapshots.toObjects(ImageCard.class);
+                            List<ImageCard> imageCards = documentSnapshots.toObjects(ImageCard.class);
                             // Add all to your list
                             mGalleryList.addAll(imageCards);
                             madapter.notifyDataSetChanged();
