@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,22 +16,21 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -48,7 +46,7 @@ public class GalleryExtendActivity extends AppCompatActivity {
 
     private static final String IMAGE_SHARE_HASHTAG = " #PCOVApp";
 
-    private ImageView mImageView;
+    private PhotoView mImageView;
     private TextView mTextView;
     private ScaleGestureDetector mScaleGestureDetector;
     private float mScaleFactor = 1.0f;
@@ -62,8 +60,8 @@ public class GalleryExtendActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         int imageID;
 
-        mImageView = (ImageView) findViewById(R.id.galleryImageView);
-        mTextView = (TextView) findViewById(R.id.galleryImageTag);
+        mImageView = findViewById(R.id.galleryImageView);
+        mTextView = findViewById(R.id.galleryImageTag);
 
         final String imageUrl = getIntent().getStringExtra("imageUrl");
         final String imageTag = getIntent().getStringExtra("imageTag");
@@ -86,10 +84,6 @@ public class GalleryExtendActivity extends AppCompatActivity {
                 });
 
         mTextView.setText(imageTag);
-
-        //For pinch & zoom
-        mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
-
     }
 
     @Override
@@ -227,34 +221,11 @@ public class GalleryExtendActivity extends AppCompatActivity {
         return intent;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        mScaleGestureDetector.onTouchEvent(event);
-        return true;
-    }
-
     public Uri getImageUri(Context context, Bitmap bitmapImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmapImage, "Title", null);
         return Uri.parse(path);
-    }
-
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            mScaleFactor *= scaleGestureDetector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
-            Log.d("pinch", "x: " + mImageView.getScaleX() + "y: " + mImageView.getScaleY());
-            if (mScaleFactor >= 1) {
-                mImageView.setScaleX(mScaleFactor);
-                mImageView.setScaleY(mScaleFactor);
-            } else {
-                mScaleFactor = 1;
-            }
-            return true;
-        }
-
     }
 
 }

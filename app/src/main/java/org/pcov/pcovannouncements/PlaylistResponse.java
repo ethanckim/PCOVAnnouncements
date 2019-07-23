@@ -1,6 +1,6 @@
 package org.pcov.pcovannouncements;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.pcov.pcovannouncements.DataClass.VideoInfo;
 
