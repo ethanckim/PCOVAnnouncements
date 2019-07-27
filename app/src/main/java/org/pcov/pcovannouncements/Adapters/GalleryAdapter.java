@@ -67,7 +67,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                         // Try again online if cache failed
                         Picasso.with(mContext)
                                 .load(uploadCurrent.getImageUrl())
-                                .networkPolicy(NetworkPolicy.OFFLINE)
                                 .fit()
                                 .centerCrop()
                                 .into(viewHolder.mImageView, new Callback() {
