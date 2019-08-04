@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\robhn\\AndroidStudioProjects\\PCOV Play Store Uploads\\Important\\pcov-keystore.jks')
+            storePassword 'forjesus'
+            keyAlias = 'upload'
+            keyPassword 'pcovpass2019'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "org.pcov.pcovannouncements"
@@ -16,6 +24,7 @@ android {
             minifyEnabled false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     packagingOptions {
@@ -24,6 +33,13 @@ android {
     }
     lintOptions {
         checkReleaseBuilds false
+    }
+}
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+        exclude module: 'commons-logging'
     }
 }
 
