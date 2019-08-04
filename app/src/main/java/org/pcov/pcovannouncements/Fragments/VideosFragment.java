@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
@@ -194,7 +194,7 @@ public class VideosFragment extends Fragment {
         private YouTube mService;
 
         public MakeRequestTask(String nextPageToken) {
-            HttpTransport transport = AndroidHttp.newCompatibleTransport();
+            HttpTransport transport = new NetHttpTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new YouTube.Builder(transport, jsonFactory, null)
                     .setApplicationName(appName)

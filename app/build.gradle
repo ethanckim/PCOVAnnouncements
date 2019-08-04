@@ -6,20 +6,24 @@ android {
         applicationId "org.pcov.pcovannouncements"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
+            multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
+    }
+    lintOptions {
+        checkReleaseBuilds false
     }
 }
 
