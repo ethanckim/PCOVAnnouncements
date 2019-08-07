@@ -1,14 +1,20 @@
 package org.pcov.pcovannouncements.Fragments;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +36,7 @@ import org.pcov.pcovannouncements.Adapters.SermonCardAdapter;
 import org.pcov.pcovannouncements.Adapters.YouTubeConfig;
 import org.pcov.pcovannouncements.DataClass.SermonCard;
 import org.pcov.pcovannouncements.DataClass.VideoInfo;
+import org.pcov.pcovannouncements.GalleryExtendActivity;
 import org.pcov.pcovannouncements.Utils;
 import org.pcov.pcovannouncements.PlaylistResponse;
 import org.pcov.pcovannouncements.R;
@@ -57,6 +64,7 @@ public class VideosFragment extends Fragment {
 
         //Updates the list of videos based off the YouTube API call.
         getResultsFromApiFirstTime();
+
 
     }
 
@@ -123,9 +131,10 @@ public class VideosFragment extends Fragment {
      * appropriate.
      */
     private void getResultsFromApiFirstTime() {
-        if (!isGooglePlayServicesAvailable()) {
+        if (!Utils.isGooglePlayServicesAvailable(getActivity())) {
             acquireGooglePlayServices();
         } else if (!Utils.isDeviceOnline(this.getActivity())) {
+
             Toast noInternetToast = Toast.makeText(getActivity().getApplicationContext(),
                     R.string.no_connection_video, Toast.LENGTH_LONG);
             noInternetToast.show();
@@ -144,13 +153,7 @@ public class VideosFragment extends Fragment {
      * @return true if Google Play Services is available and up to
      * date on this device; false otherwise.
      */
-    private boolean isGooglePlayServicesAvailable() {
-        GoogleApiAvailability apiAvailability =
-                GoogleApiAvailability.getInstance();
-        final int connectionStatusCode =
-                apiAvailability.isGooglePlayServicesAvailable(getActivity());
-        return connectionStatusCode == ConnectionResult.SUCCESS;
-    }
+
 
     /**
      * Attempt to resolve a missing, out-of-date, invalid or disabled Google
@@ -175,12 +178,13 @@ public class VideosFragment extends Fragment {
      */
     void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        Dialog dialog = apiAvailability.getErrorDialog(
-                getActivity(),
-                connectionStatusCode,
-                REQUEST_GOOGLE_PLAY_SERVICES);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(R.string.googleplayservices_dialog_message)
+                .setTitle(R.string.googleplayservices_permission_dialog_title);
+        AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 
 

@@ -48,5 +48,12 @@
     <string name="storage_permission_dialog_title">Need Storage Permissions</string>
     <string name="okay">Okay</string>
 
+    <string name="googleplayservices_dialog_message">App cannot function without google play services.</string>
+    <string name="googleplayservices_permission_dialog_title">Need Google Play Services</string>
+    <string name="exitapp">Exit App</string>
+
+
+
+
 
 </resources>
