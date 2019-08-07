@@ -1,10 +1,9 @@
 package org.pcov.pcovannouncements.Adapters;
 
 import android.content.Context;
-import android.graphics.Point;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                         // Try again online if cache failed
                         Picasso.with(mContext)
                                 .load(uploadCurrent.getImageUrl())
-                                .networkPolicy(NetworkPolicy.OFFLINE)
                                 .fit()
                                 .centerCrop()
                                 .into(viewHolder.mImageView, new Callback() {

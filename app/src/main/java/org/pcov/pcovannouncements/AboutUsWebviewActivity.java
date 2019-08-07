@@ -1,8 +1,8 @@
 package org.pcov.pcovannouncements;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -48,16 +48,16 @@ public class AboutUsWebviewActivity extends AppCompatActivity {
                         webView.loadUrl(task.getResult().getString("about_us"));
                         getSupportActionBar().setTitle(getString(R.string.about_us));
                     } else if (position == 1) {
-                        webView.loadUrl(task.getResult().getString("church_history"));
+                        webView.loadUrl(task.getResult().getString("for_newcommers"));
                         getSupportActionBar().setTitle(getString(R.string.for_newcomers));
                     } else if (position == 2) {
-                        webView.loadUrl(task.getResult().getString("for_newcommers"));
+                        webView.loadUrl(task.getResult().getString("worship_services"));
                         getSupportActionBar().setTitle(getString(R.string.worship_services));
                     } else if (position == 3) {
-                        webView.loadUrl(task.getResult().getString("visit_us"));
+                        webView.loadUrl(task.getResult().getString("church_history"));
                         getSupportActionBar().setTitle(getString(R.string.church_history));
                     } else {
-                        webView.loadUrl(task.getResult().getString("worship_services"));
+                        webView.loadUrl(task.getResult().getString("visit_us"));
                         getSupportActionBar().setTitle(getString(R.string.visit_us));
                     }
 
