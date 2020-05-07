@@ -1,2 +1,3 @@
 # PCOVAnnouncements
-I don't need a read me... There are only 3 people editing this repo at the end...
+Code Repository for the PCOV App! Available in the Playstore:
+https://play.google.com/store/apps/details?id=org.pcov.pcovannouncements
